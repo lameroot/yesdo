@@ -1,0 +1,53 @@
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	compileJava.options.encoding = 'UTF-8'
+
+	ext.hibernateVersion = '4.3.6.Final'
+	ext.hibernateValidatorVersion = '5.1.2.Final'
+	ext.springVersion = '4.1.2.RELEASE'
+	ext.springSecurityVersion = '3.2.5.RELEASE'
+
+	idea {
+		module {
+			//if you love browsing Javadoc
+			downloadJavadoc = true
+
+			//and hate reading sources :)
+			downloadSources = true
+		}
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		compile 'org.codehaus.groovy:groovy-all:2.3.6'
+
+		compile 'org.springframework.data:spring-data-jpa:1.7.0.RELEASE'
+		compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+
+		compile 'com.google.guava:guava:+'
+		compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.2'
+		compile 'com.fasterxml.jackson.core:jackson-core:2.4.1.1'
+
+		compile group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA'
+
+		compile group: 'com.intellij', name: 'annotations', version: '9.0.4'
+
+		compile group: 'org.slf4j', name: 'slf4j-api', version: '1.6.6'
+		runtime group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.6.4'
+		runtime group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
+
+
+		testCompile 'junit:junit:4.11'
+	}
+
+	version = '1.0'
+	group = 'ru.yesdo'
+}

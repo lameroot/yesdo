@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+
+
+<!-- =============================================================== -->
+<!-- Configure the webapp                                            -->
+<!-- =============================================================== -->
+
+<Configure id='wac' class="org.eclipse.jetty.webapp.WebAppContext">
+
+	<!-- Database -->
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>jdbc.driver</Arg>
+		<Arg type="java.lang.String">oracle.jdbc.driver.OracleDriver</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>jdbc.url</Arg>
+		<Arg type="java.lang.String">jdbc:oracle:thin:@(DESCRIPTION=(CONNECT_DATA=(SERVER=DEDICATED)(SID=RBS))(ADDRESS=(PROTOCOL=TCP)(HOST=odb01.rbs.bpc.in)(PORT=1521)))</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>jdbc.user</Arg>
+		<Arg type="java.lang.String">aflaemd</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>jdbc.password</Arg>
+		<Arg type="java.lang.String">aflaemd_123</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>jdbc.maxPoolSize</Arg>
+		<Arg type="java.lang.Integer">30</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+
+	<!-- EPR -->
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>epr.url</Arg>
+		<Arg type="java.lang.String">https://test.paymentgate.ru/testaeroflot</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>epr.user</Arg>
+		<Arg type="java.lang.String">site</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>epr.password</Arg>
+		<Arg type="java.lang.String">site</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>epr.timeout</Arg>
+		<Arg type="java.lang.Integer">2500000</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+
+	<!-- DEBUGGING-->
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>debugger.port</Arg>
+		<Arg type="java.lang.Integer">9888</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+		<Arg></Arg>
+		<Arg>debugger.enable</Arg>
+		<Arg type="java.lang.Boolean">true</Arg>
+		<Arg type="boolean">true</Arg>
+	</New>
+
+</Configure>

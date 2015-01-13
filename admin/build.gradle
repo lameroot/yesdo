@@ -1,0 +1,133 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://rbs-develop.paymentgate.ru/repo/content/repositories/thirdparty"
+			credentials {
+				username rbsMavenUser
+				password rbsMavenPassword
+			}
+		}
+		maven {
+			url "https://rbs-develop.paymentgate.ru/repo/content/repositories/releases"
+			credentials {
+				username rbsMavenUser
+				password rbsMavenPassword
+			}
+		}
+		maven {
+			url "https://rbs-develop.paymentgate.ru/repo/content/repositories/snapshots"
+			credentials {
+				username rbsMavenUser
+				password rbsMavenPassword
+			}
+		}
+	}
+
+	dependencies {
+		def jettyVer = '9.2.4.v20141103'
+		classpath 'org.gradle.plugin:gradle-jetty-plugin:1.3.1'
+		classpath "org.eclipse.jetty:jetty-util:${jettyVer}"
+		classpath "org.eclipse.jetty:jetty-webapp:${jettyVer}"
+		classpath "org.eclipse.jetty:jetty-plus:${jettyVer}"
+		classpath "org.eclipse.jetty:jetty-jndi:${jettyVer}"
+		classpath "org.eclipse.jetty:jetty-server:${jettyVer}"
+		classpath "org.eclipse.jetty:jetty-annotations:${jettyVer}"
+		classpath "org.eclipse.jetty.websocket:websocket-server:${jettyVer}"
+		classpath "org.eclipse.jetty:jetty-jsp:${jettyVer}"
+	}
+}
+
+apply plugin: 'war'
+apply plugin: 'eclipse-jetty'
+
+
+jettyRun {
+	webAppSourceDirectory = file('src/main/webapp')
+}
+
+[jettyRun, jettyRunWar]*.jettyEnvXml = file('src/main/resources/jetty-env.xml')
+
+dependencies {
+	compile 'com.h2database:h2:1.4.+'
+	compile project(':model')
+	compile project(':common-services')
+
+	compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+	compile "org.hibernate:hibernate-c3p0:${hibernateVersion}"
+	compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
+
+	compile group: 'org.springframework', name: 'spring-aop', version: springVersion
+	compile group: 'org.springframework', name: 'spring-aspects', version: springVersion
+	compile group: 'org.springframework', name: 'spring-core', version: springVersion
+	compile(group: 'org.springframework', name: 'spring-context', version: springVersion) {
+		exclude(module: 'commons-logging')
+	}
+	compile group: 'org.springframework', name: 'spring-web', version: springVersion
+	compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
+	compile group: 'org.springframework', name: 'spring-context-support', version: springVersion
+	compile group: 'org.springframework', name: 'spring-tx', version: springVersion
+	compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
+	compile group: 'org.springframework', name: 'spring-beans', version: springVersion
+	compile group: 'org.springframework', name: 'spring-expression', version: springVersion
+
+	compile group: 'org.springframework.security', name: 'spring-security-web', version: springSecurityVersion
+	compile group: 'org.springframework.security', name: 'spring-security-config', version: springSecurityVersion
+
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+	compile(group: 'javax.servlet.jsp.jstl', name: 'jstl-api', version: '1.2') {
+		exclude(module: 'servlet-api')
+	}
+	compile(group: 'org.glassfish.web', name: 'jstl-impl', version: '1.2') {
+		exclude(module: 'servlet-api')
+	}
+}
+
+project.webAppDirName = "build/${name}"
+
+war {
+	manifest {
+		attributes 'Implementation-Title': 'Msq Web Console',
+				'Implementation-Version': version,
+				'Built-By': System.getProperty('user.name'),
+				'Built-Date': new Date(),
+				'Built-JDK': System.getProperty('java.version'),
+				'Built-Gradle': gradle.gradleVersion
+	}
+	webXml = file('src/main/webapp/WEB-INF/web.xml')
+}
+
+def appDir = file('src/main/webapp').path
+def appOut = file(project.webAppDirName).path
+
+
+ant.importBuild 'src/main/webapp/build.xml'
+ant.properties['workspace.build.dir'] = file("build/tmp/sencha").path
+ant.properties['build.dir'] = appOut
+ant.properties['app.output.base'] = appOut
+ant.properties['app.output'] = appOut
+ant.properties['build.out.base.path']=appOut
+//ant.properties['build.json.bootstrap.rel.path']=appOut
+//ant.properties['app.output.manifest.embed'] = true
+//ant.properties['build.resources.dir'] = appOut
+//ant.properties['app.output.js'] = appOut
+ant.properties['build.out.page.path'] = file( "build/${name}/WEB-INF/views/index.jsp").path
+ant.properties['app.page.name'] = 'index.jsp'
+ant.properties['app.indexHtmlPath']='index.jsp'
+
+
+task gzipResources(dependsOn: 'sencha-build') << {
+	logging.level = LogLevel.INFO
+	// Create a file tree with a base directory
+	FileTree tree = fileTree(dir: project.webAppDirName)
+	// Add include patterns to the tree
+	tree.include('**/*.html', '**/*.js', '**/*.css')
+	tree.visit { element ->
+		if (!element.file.directory) {
+			ant.gzip(src: "${appOut}/${element.path}", destfile: "${appOut}/${element.path}.gz")
+		}
+	}
+}
+
+war.dependsOn 'sencha-build'
+war.dependsOn gzipResources
