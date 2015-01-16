@@ -100,11 +100,9 @@ war {
 def appDir = file('src/main/webapp').path
 def appOut = file(project.webAppDirName).path
 
-
 ant.importBuild 'src/main/webapp/build.xml'
 ant.properties['workspace.build.dir'] = file("build/tmp/sencha").path
 ant.properties['build.dir'] = appOut
-ant.properties['app.output.base'] = appOut
 ant.properties['app.output'] = appOut
 ant.properties['build.out.base.path']=appOut
 //ant.properties['build.json.bootstrap.rel.path']=appOut

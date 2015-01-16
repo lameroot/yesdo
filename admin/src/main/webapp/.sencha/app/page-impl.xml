@@ -45,6 +45,7 @@
     <target name="-build-output-manifest-page">
         <local name="metadata.base.path"/>
         <property name="metadata.base.path" value="${build.out.metadata.dir}"/>
+        <echo> metadata.base.path =  ${metadata.base.path}</echo>
         <x-run-if-true value="${app.output.manifest.enable}">
             <if>
                 <x-is-true value="${build.enable.embedded.manifest}"/>
@@ -57,7 +58,7 @@
                             -operation=manifest
                             -tpl=${build.microloader.json.tpl.embedded}
                             -out=${build.microloader.path}
-                            -resourcePath=${build.out.base.path}
+                            -resourcePath=
                             -basePath=${metadata.base.path}
                         and
                         microload
@@ -78,14 +79,14 @@
                             -operation=manifest
                             -tpl=${build.microloader.json.tpl.standalone}
                             -out=${build.out.json.path}
-                            -resourcePath=${build.out.base.path}
+                            -resourcePath=
                             -basePath=${metadata.base.path}
                         and
                         microload
                             -operation=manifest
                             -tpl=${build.microloader.json.tpl.external}
                             -out=${build.microloader.path}
-                            -resourcePath=${build.out.base.path}
+                            -resourcePath=
                             -basePath=${metadata.base.path}
                         and
                         # generate microloader file
