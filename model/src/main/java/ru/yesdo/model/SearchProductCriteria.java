@@ -10,7 +10,10 @@ public class SearchProductCriteria {
 
     private Double startPrice;
     private Double endPrice;
-    private Location location;
+    private Location location; //тут должен быть класс для выбора конкретной области или то что находится рядом, см. описание функционала языка
+    private boolean friends; //пользовались ли друзья данной услугой
+    private TimeProduct timeProduct;
+    private ProductType typeProduct; //тип услуги
     //искать в области или ещё как
 
 }
