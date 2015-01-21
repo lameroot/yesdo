@@ -1,5 +1,8 @@
 package ru.yesdo.model;
 
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -18,7 +21,9 @@ import java.util.Set;
  * мерчанта, иначе должна быть возможность отправить уведомление создателю, с текстом почему данный продукт не удовлетворяет политике сайта.
  * Также предусмотреть возможность на этой же странице видеть продукты, которые создают сами пользователи, должна быть инфа кто и что создал. (!!!данный функйиона можно только предусмотреть но не делать)
  */
+
 public class Product {
+
 
     private Long id;
     private String title;//название продукта
@@ -37,4 +42,12 @@ public class Product {
     private Set<Tag> tags;//список тэгов, кол-во должно ограничиваться пермиссией, если это делает мерчант
     private Set<User> users;//список пользоватлей, кто воспользовался данной услугой или в случае с пользователем, кто просмотрел или лайкнул данный продукт
     private boolean enabled;//доступен или нет.
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

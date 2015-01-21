@@ -24,12 +24,33 @@ subprojects {
 
 	repositories {
 		mavenCentral()
+		maven {
+			url "http://m2.neo4j.org/releases"
+		}
+		maven {
+			url "http://m2.neo4j.org/content/repositories/releases/"
+		}
 	}
 
 	dependencies {
 		compile 'org.codehaus.groovy:groovy-all:2.3.6'
 
-		compile 'org.springframework.data:spring-data-jpa:1.7.0.RELEASE'
+		compile ('org.springframework.data:spring-data-jpa:1.7.0.RELEASE') {
+			exclude group: 'org.springframework'
+		}
+		compile group: 'org.springframework', name: 'spring-aop', version: springVersion
+		compile group: 'org.springframework', name: 'spring-aspects', version: springVersion
+		compile group: 'org.springframework', name: 'spring-core', version: springVersion
+		compile(group: 'org.springframework', name: 'spring-context', version: springVersion) {
+			exclude(module: 'commons-logging')
+		}
+		compile group: 'org.springframework', name: 'spring-context-support', version: springVersion
+		compile group: 'org.springframework', name: 'spring-tx', version: springVersion
+		compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
+		compile group: 'org.springframework', name: 'spring-beans', version: springVersion
+		compile group: 'org.springframework', name: 'spring-expression', version: springVersion
+
+		compile 'org.springframework.data:spring-data-neo4j-cross-store:3.2.1.RELEASE'
 		compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
 		compile 'com.google.guava:guava:+'
@@ -46,6 +67,9 @@ subprojects {
 
 
 		testCompile 'junit:junit:4.11'
+		testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+
+		//compile 'org.springframework.data:spring-data-neo4j:3.2.1.RELEASE'
 	}
 
 	version = '1.0'

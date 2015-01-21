@@ -57,19 +57,19 @@ dependencies {
 	compile "org.hibernate:hibernate-c3p0:${hibernateVersion}"
 	compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
 
-	compile group: 'org.springframework', name: 'spring-aop', version: springVersion
-	compile group: 'org.springframework', name: 'spring-aspects', version: springVersion
-	compile group: 'org.springframework', name: 'spring-core', version: springVersion
-	compile(group: 'org.springframework', name: 'spring-context', version: springVersion) {
-		exclude(module: 'commons-logging')
-	}
+//	compile group: 'org.springframework', name: 'spring-aop', version: springVersion
+//	compile group: 'org.springframework', name: 'spring-aspects', version: springVersion
+//	compile group: 'org.springframework', name: 'spring-core', version: springVersion
+//	compile(group: 'org.springframework', name: 'spring-context', version: springVersion) {
+//		exclude(module: 'commons-logging')
+//	}
 	compile group: 'org.springframework', name: 'spring-web', version: springVersion
 	compile group: 'org.springframework', name: 'spring-webmvc', version: springVersion
-	compile group: 'org.springframework', name: 'spring-context-support', version: springVersion
-	compile group: 'org.springframework', name: 'spring-tx', version: springVersion
-	compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
-	compile group: 'org.springframework', name: 'spring-beans', version: springVersion
-	compile group: 'org.springframework', name: 'spring-expression', version: springVersion
+//	compile group: 'org.springframework', name: 'spring-context-support', version: springVersion
+//	compile group: 'org.springframework', name: 'spring-tx', version: springVersion
+//	compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
+//	compile group: 'org.springframework', name: 'spring-beans', version: springVersion
+//	compile group: 'org.springframework', name: 'spring-expression', version: springVersion
 
 	compile group: 'org.springframework.security', name: 'spring-security-web', version: springSecurityVersion
 	compile group: 'org.springframework.security', name: 'spring-security-config', version: springSecurityVersion

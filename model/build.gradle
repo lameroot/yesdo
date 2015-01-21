@@ -1,3 +1,6 @@
 dependencies {
-
+    compile ('org.springframework.data:spring-data-neo4j:3.2.1.RELEASE') {
+        exclude group: 'org.springframework'
+        //exclude group: 'org.springframework', module: 'spring-tx'
+    }
 }

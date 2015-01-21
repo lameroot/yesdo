@@ -1,5 +1,11 @@
 package ru.yesdo.model;
 
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.GraphProperty;
+import org.springframework.data.neo4j.annotation.Indexed;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -16,14 +22,70 @@ import java.util.Set;
  * которые храним в БД, необходимо также сохранять граф узлов. Используем для этого spring-data-neo4j .
  * !!!На данном этапе делаем только сохранение в БД с помощью хибернайта и spring-data .
  */
+//http://docs.spring.io/spring-data/data-neo4j/docs/3.2.1.RELEASE/reference/html/#reference_cross-store
+@NodeEntity(partial = true)
+@Entity
+@Table(name = "activity")
 public class Activity {
 
+    @GraphId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;//
+    @GraphProperty
+    @Indexed
     private String title;//название
     private Set<Activity> parents;//список родителей
     private Set<Activity> child;//список дочерних
     private Set<Merchant> merchants;//список мерчантов, которые находятся в этой активити
     private Set<Product> products;//список продуктов, которые включены в эту активити
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Set<Activity> getParents() {
+        return parents;
+    }
+
+    public void setParents(Set<Activity> parents) {
+        this.parents = parents;
+    }
+
+    public Set<Activity> getChild() {
+        return child;
+    }
+
+    public void setChild(Set<Activity> child) {
+        this.child = child;
+    }
+
+    public Set<Merchant> getMerchants() {
+        return merchants;
+    }
+
+    public void setMerchants(Set<Merchant> merchants) {
+        this.merchants = merchants;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 }

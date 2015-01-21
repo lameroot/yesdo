@@ -1,5 +1,9 @@
 package ru.yesdo.model;
 
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.Indexed;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
 import java.util.Set;
 
 /**
@@ -8,7 +12,9 @@ import java.util.Set;
  * Должна быть отдельная вкладка для управления мерчантами. Должно быть разграничение по пермиссиям.
  * По сути управление мерчантами должно сводится к созданию и редактированию. Примерно тоже самое что в нашей админке.
  */
+
 public class Merchant {
+
 
     private Long id;
     private Set<Activity> activities;//список активити в которые может вступать мерчант. кол-во активити должно ограничиваться пермиссией
@@ -21,4 +27,12 @@ public class Merchant {
     private Set<Blog> blogs;//список блогов, которые есть у мерчанта
     private Set<Option> options;//список пермиссий, которыми он обладает
     private boolean enabled;//доступен или нет
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
