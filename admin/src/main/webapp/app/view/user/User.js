@@ -4,7 +4,7 @@ Ext.define('YesdoApp.view.user.User', {
 	alias: 'widget.user',
 	controller: 'users',
 
-	width: 360,
+	//width: 360,
 	//minHeight: 250,
 
 	bodyPadding: 5,
@@ -28,6 +28,7 @@ Ext.define('YesdoApp.view.user.User', {
 				{
 					xtype: 'textfield',
 					fieldLabel: 'Логин',
+					readOnly: true,
 					allowBlank: false,
 					bind: '{theUser.login}',
 					publishes: ['value']
@@ -42,12 +43,25 @@ Ext.define('YesdoApp.view.user.User', {
 				},
 				{
 					xtype: 'itemselectorfield',
-					name: 'permissions',
+					bind: {
+						value: '{theUser.permissions}'
+					},
 					height: 200,
 					width: 700,
-					buttons: [ 'add', 'remove'],
+					buttons: ['add', 'remove'],
 					fieldLabel: 'permissions',
-					store: 'Permissions',
+					//store: 'Permissions',
+					store: {
+						model: 'YesdoApp.model.Permission',
+						proxy: {
+							type: 'ajax',
+							url: 'user/permissions',
+							reader: {
+								type: 'array'
+							}
+						},
+						autoLoad: true
+					},
 					displayField: 'name',
 					valueField: 'value',
 					allowBlank: true,

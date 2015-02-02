@@ -28,6 +28,15 @@ Ext.define('YesdoApp.view.user.Users', {
 			text: 'Логин',
 			dataIndex: 'login',
 			width: 180
+		},
+		{
+			text: 'Продавец',
+			width: 180,
+			renderer: function(value, meta, record) {
+				var m = record.get('merchant')
+				return Ext.isEmpty(m) ? Ext.emptyString : m.name;
+			}
 		}
+
 	]
 });

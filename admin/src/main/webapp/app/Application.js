@@ -17,10 +17,6 @@ Ext.define('YesdoApp.Application', {
 		'YesdoApp.Format'
 	],
 
-	stores: [
-		'Permissions'
-	],
-
 	views: [
 		'YesdoApp.view.login.Login',
 		'YesdoApp.view.main.Main'

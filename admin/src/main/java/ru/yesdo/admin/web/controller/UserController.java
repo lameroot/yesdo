@@ -15,6 +15,7 @@ import ru.yesdo.repository.UserRepository;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +33,8 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, params = "!filter")
 	public Collection<User> all() {
-		return ImmutableList.copyOf(userRepository.findAll());
+		List<User> users = userRepository.findByMerchant(currentUser().getMerchant());
+		return ImmutableList.copyOf(users);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
