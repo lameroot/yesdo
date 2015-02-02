@@ -28,6 +28,7 @@ Ext.define('YesdoApp.view.user.User', {
 				{
 					xtype: 'textfield',
 					fieldLabel: 'Логин',
+					readOnly: true,
 					allowBlank: false,
 					bind: {
 						value: '{theUser.login}',

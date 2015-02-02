@@ -65,7 +65,7 @@ public class SpringDataConfig  implements InitializingBean {
 		u.setLogin("test");
 		u.setPasswordHash(encoder.encode("test"));
 		u.setMerchant(merchant);
-		u.setPermissions(EnumSet.allOf(Permission.class).stream().filter(x->!x.equals(Permission.MANAGE_USERS)).collect(Collectors.toSet()));
+		u.setPermissions(EnumSet.allOf(Permission.class));
 		u = userRepository.save(u);
 
 

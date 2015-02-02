@@ -8,6 +8,7 @@ Ext.define('YesdoApp.view.user.UserController', {
 	],
 
 
+
 	onAddUser: function () {
 		var user;
 
