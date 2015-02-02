@@ -29,6 +29,9 @@ public class User {
 	private String passwordHash;
 	//etc
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	Merchant merchant;
+
 	@Transient
 	private Set<Product> whiteProducts;
 	@Transient
@@ -121,5 +124,13 @@ public class User {
 
 	public void setBlackMerchants(Set<Merchant> blackMerchants) {
 		this.blackMerchants = blackMerchants;
+	}
+
+	public Merchant getMerchant() {
+		return merchant;
+	}
+
+	public void setMerchant(Merchant merchant) {
+		this.merchant = merchant;
 	}
 }

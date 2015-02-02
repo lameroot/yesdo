@@ -2,8 +2,10 @@ Ext.define('YesdoApp.view.user.UserController', {
 	extend: 'Ext.app.ViewController',
 	alias: 'controller.users',
 	requires: [
-		'Ext.window.Toast'
+		'Ext.window.Toast',
+		'YesdoApp.model.Permission'
 	],
+
 
 	onAddUser: function () {
 		var user;
