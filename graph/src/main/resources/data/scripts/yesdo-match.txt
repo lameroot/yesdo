@@ -20,3 +20,5 @@ start n=node(*) delete n;
 
 
 match (p:Product)<-[r:PRODUCT]-(m)<-[:MERCHANT]-(a)<-[:ACTIVITY*0..3]-(a1 {title:'activity_level2_num1'}) where r.amount > toInt(100) return p,r,m,a,a1;
+
+match (p:Product)<-[r:PRODUCT]-(m)<-[:MERCHANT]-()<-[:ACTIVITY*0..3]-(a:Activity {title:'a31'}) where r.amount >= toInt(100) return distinct p;
