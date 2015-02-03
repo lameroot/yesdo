@@ -1,4 +1,4 @@
 title_merchant,title_activities
 merchant_level2_num1,"[activity_level2_num1]"
-merchant_level2_num2,"[activity_level2_num1,activity_level2_num2]"
+merchant_level2_num2,"[activity_level2_num2]"
 merchant_level3_num1,"[activity_level3_num1,activity_level3_num2]"

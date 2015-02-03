@@ -17,3 +17,6 @@ start n=relationship(*) return n;
 
 start n=relationship(*) delete n;
 start n=node(*) delete n;
+
+
+match (p:Product)<-[r:PRODUCT]-(m)<-[:MERCHANT]-(a)<-[:ACTIVITY*0..3]-(a1 {title:'activity_level2_num1'}) where r.amount > toInt(100) return p,r,m,a,a1;
