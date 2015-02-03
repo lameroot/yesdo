@@ -1,0 +1,7 @@
+title,child
+"activity_root","[activity_level1_num1,activity_level1_num2,activity_level1_num3]"
+"activity_level1_num1","[activity_level2_num1]"
+"activity_level1_num2","[activity_level2_num1,activity_level2_num2]"
+"activity_level1_num3","[activity_level2_num2]"
+"activity_level2_num1","[activity_level3_num1]"
+"activity_level2_num2","[activity_level3_num2]"

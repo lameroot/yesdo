@@ -1,0 +1,27 @@
+create (activity_level1_num1:Activity {title:'activity_level1_num1'});
+create (activity_level1_num2:Activity {title:'activity_level1_num2'});
+create (activity_level1_num3:Activity {title:'activity_level1_num3'});
+
+foreach (r in range(1,3) | create (activity:Activity {title:'activity_level1_num' + r}));
+
+foreach (r in range(1,2) | create (activity:Activity {title:'activity_level2_num' + r}));
+
+foreach (r in range(1,2) | create (activity:Activity {title:'activity_level3_num' + r}));
+
+match (a1:Activity) where a1.title='activity_level1_num1' 
+match (a2:Activity) where a2.title='activity_level2_num1' 
+create unique (a1)<-[:ACTIVITY]->(a2);
+
+match (a1:Activity) where a1.title='activity_level1_num2' 
+match (a2:Activity) where a2.title='activity_level2_num1' 
+create unique (a1)<-[:ACTIVITY]->(a2);
+
+match (a1:Activity) where a1.title='activity_level1_num3' 
+match (a2:Activity) where a2.title='activity_level2_num2' 
+create unique (a1)<-[:ACTIVITY]->(a2);
+
+match (a1:Activity) where a1.title='activity_level2_num2' 
+match (a2:Activity) where a2.title='activity_level3_num2' 
+create unique (a1)<-[:ACTIVITY]->(a2);
+
+create (merchant_level2_num1:Merchant {title:'merchant_level2_num})

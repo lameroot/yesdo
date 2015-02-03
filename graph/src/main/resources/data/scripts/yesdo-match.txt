@@ -1,0 +1,17 @@
+match (p:Product)-[rp:PRODUCT]-(m:Merchant)-[ra:Activity]-(a:Activity) return p,rp,m;
+
+match (p:Product)-[rp:PRODUCT]-(m:Merchant)-[ra:MERCHANT]-(a:Activity) where rp.amount > 200 return p.title,rp.amount,m.title,a.title;
+
+match (a)-[b]-(c) return a,b,c;
+
+match (p:Product)-[rp:PRODUCT]-(m:Merchant)-[ra:MERCHANT]-(a:Activity)-[:ACTIVITY*0..3]-(a1:Activity) where rp.amount >= 200 and (a.titile='activity_root' or a1.title='activity_root') return p,m;
+
+match (p:Product)-[rp:PRODUCT]-(m:Merchant)-[ra:MERCHANT]-(a:Activity)-[:ACTIVITY*0..3]-(a1:Activity) where rp.amount > 200  return p,m;
+
+match (p:Product {title:'product_merchant_level3_num1_num1'}),(a:Activity {title:'activity_root'}),sh=shortestPath(p-[*..15]-a) return sh;
+
+start n=node(*) return n;
+start n=relationship(*) return n;
+
+start n=relationship(*) delete n;
+start n=node(*) delete n;
