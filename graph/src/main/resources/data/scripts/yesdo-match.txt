@@ -10,6 +10,8 @@ match (p:Product)-[rp:PRODUCT]-(m:Merchant)-[ra:MERCHANT]-(a:Activity)-[:ACTIVIT
 
 match (p:Product {title:'product_merchant_level3_num1_num1'}),(a:Activity {title:'activity_root'}),sh=shortestPath(p-[*..15]-a) return sh;
 
+match (p:Product)<-[rp:PRODUCT]-(m:Merchant)<-[ra:MERCHANT]-(a:Activity)<-[:ACTIVITY*0..3]-(a1:Activity)  return p,rp,m,ra,a,a1;
+
 start n=node(*) return n;
 start n=relationship(*) return n;
 
