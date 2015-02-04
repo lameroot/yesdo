@@ -14,6 +14,7 @@ Ext.define('YesdoApp.model.Base', {
 		namespace: 'YesdoApp.model',
 		proxy: {
 			type: 'rest',
+			paramsAsJson: true,
 			url: '{prefix}/{entityName:uncapitalize}',
 			pageParam: '',
 			startParam: '',

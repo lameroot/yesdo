@@ -15,6 +15,7 @@ import ru.yesdo.repository.UserRepository;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 /**
  * Created by dsvdsv on 02.01.15.
@@ -64,7 +65,7 @@ public class SpringDataConfig  implements InitializingBean {
 		u.setLogin("test");
 		u.setPasswordHash(encoder.encode("test"));
 		u.setMerchant(merchant);
-		u.setPermissions(EnumSet.allOf(Permission.class));
+		u.setPermissions(EnumSet.allOf(Permission.class).stream().filter(x->!x.equals(Permission.MANAGE_USERS)).collect(Collectors.toSet()));
 		u = userRepository.save(u);
 
 

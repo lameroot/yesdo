@@ -6,31 +6,31 @@
  * TODO - Replace this content of this view to suite the needs of your application.
  */
 Ext.define('YesdoApp.view.main.MainController', {
-    extend: 'Ext.app.ViewController',
+	extend: 'Ext.app.ViewController',
 
-    alias: 'controller.main',
+	alias: 'controller.main',
 
-    onClickUserName: function () {
-        var data = this.getViewModel().getData();
-        var win = new web.view.user.User({
-            viewModel: {
-                data: {
-                    theUser: data.currentUser
-                }
-            }
-        });
+	onClickUserName: function () {
+		var data = this.getViewModel().getData();
+		var win = Ext.widget('user', {
+			viewModel: {
+				data: {
+					theUser: data.currentUser,
+					phantom: data.currentUser.phantom
+				}
+			}
+		});
+		win.show();
+	},
 
-        win.show();
-    },
-
-    onClickLogout: function() {
-        Ext.Ajax.request({
-            url: 'logout',
-            method: 'POST',
-            scope: this,
-            callback: function() {
-                this.redirectTo('login');
-            }
-        });
-    }
+	onClickLogout: function () {
+		Ext.Ajax.request({
+			url: 'logout',
+			method: 'POST',
+			scope: this,
+			callback: function () {
+				this.redirectTo('login');
+			}
+		});
+	}
 });

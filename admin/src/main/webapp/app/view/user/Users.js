@@ -3,7 +3,7 @@ Ext.define('YesdoApp.view.user.Users', {
 	alias: 'widget.users',
 
 	controller: 'users',
-
+	plugins: 'access', access: 'MANAGE_USERS',
 	bind: '{users}',
 	reference: 'userGrid',
 	viewModel: {
