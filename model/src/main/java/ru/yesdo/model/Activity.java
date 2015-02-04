@@ -24,9 +24,11 @@ import java.util.Set;
  */
 //http://docs.spring.io/spring-data/data-neo4j/docs/3.2.1.RELEASE/reference/html/#reference_cross-store
 @NodeEntity(partial = true)
-@Entity
-@Table(name = "activity")
+//@Entity
+//@Table(name = "activity")
 public class Activity {
+
+    public final static String ROOT_TITLE = "root_activity";
 
     @GraphId
     @Id

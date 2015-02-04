@@ -45,6 +45,28 @@ public class ActivityGraphServiceTest extends Neo4jConfigurationTest {
         activityGraphService.fillTestData(3,3);
     }
 
+    private Activity create(String title,Activity...parents) {
+        ActivityData activityData = new ActivityData().setTitle(title);
+        for (Activity parent : parents) {
+            activityData.addParent(parent);
+        }
+        Activity activity = activityGraphService.create(activityData);
+        assertNotNull(activity.getId());
+        return activity;
+    }
+
+    @Test
+    public void testCreateActivities() {
+        Activity a0 = create(Activity.ROOT_TITLE);
+        Activity a11 = create("a11",a0);
+        Activity a12 = create("a12",a0);
+        Activity a13 = create("a13",a0);
+        Activity a21 = create("a21",a11,a13);
+        Activity a22 = create("a11",a13);
+        Activity a31 = create("a31",a21);
+        Activity a32 = create("a31",a21);
+    }
+
     @Test
     public void testCreateRealActivity() {
         ActivityData activityDataRoot = new ActivityData().setTitle("activity_root");

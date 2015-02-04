@@ -49,8 +49,11 @@ subprojects {
 		compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
 		compile group: 'org.springframework', name: 'spring-beans', version: springVersion
 		compile group: 'org.springframework', name: 'spring-expression', version: springVersion
+        compile group: 'org.springframework', name: 'spring-orm', version: springVersion
 
-		compile 'org.springframework.data:spring-data-neo4j-cross-store:3.2.1.RELEASE'
+		compile ('org.springframework.data:spring-data-neo4j-cross-store:3.2.1.RELEASE') {
+            exclude group : 'org.hibernate.javax.persistence'
+        }
 		compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
 		compile 'com.google.guava:guava:+'

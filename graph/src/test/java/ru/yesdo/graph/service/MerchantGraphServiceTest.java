@@ -30,6 +30,29 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
         merchantGraphRepository.deleteAll();
     }
 
+    private Merchant create(String title, String... activityTitles) {
+        MerchantData merchantData = new MerchantData().setTitle(title);
+        for (String activityTitle : activityTitles) {
+            Activity activity = findActivityByTitle(activityTitle);
+            assertNotNull(activity);
+            merchantData.addActivity(activity);
+        }
+        Merchant merchant = merchantGraphService.create(merchantData);
+        assertNotNull(merchant.getId());
+        return merchant;
+    }
+
+    @Test
+    public void testCreateMerchants() {
+        Merchant m11 = create("m11","a11");
+        Merchant m12 = create("m12","a13");
+        Merchant m21 = create("m21","a21","a22");
+        Merchant m31 = create("m31","a31");
+        Merchant m32 = create("m32","a31");
+        Merchant m33 = create("m33","a32");
+        Merchant m34 = create("m34","a32");
+    }
+
     protected Merchant findMerchantByTitle(String title) {
         return merchantGraphRepository.findByMerchantLogin(title);
     }
@@ -55,7 +78,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
     }
 
     @Test
-    public void testCreateMerchants() {
+    public void testCreateMerchants1() {
         testCreateActivity();
 
         Activity activityLevel0Num1 = activityGraphRepository.findByTitle("activity-parent1");
