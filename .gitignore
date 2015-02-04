@@ -3,6 +3,7 @@
 .settings
 *.class
 
+classes
 target
 /target
 *.iml
