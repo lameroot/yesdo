@@ -15,6 +15,7 @@ Ext.define('YesdoApp.Application', {
 		'Ext.app.bindinspector.*',
 		'YesdoApp.LoginManager',
 		'YesdoApp.Format',
+		'YesdoApp.view.*'
 		'YesdoApp.plugin.Access'
 	],
 
