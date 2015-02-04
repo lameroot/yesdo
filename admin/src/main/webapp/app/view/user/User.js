@@ -3,7 +3,7 @@ Ext.define('YesdoApp.view.user.User', {
 
 	alias: 'widget.user',
 	controller: 'users',
-
+	plugins: 'access', access: 'MANAGE_USERS',
 	//width: 360,
 	//minHeight: 250,
 
@@ -28,9 +28,11 @@ Ext.define('YesdoApp.view.user.User', {
 				{
 					xtype: 'textfield',
 					fieldLabel: 'Логин',
-					readOnly: true,
 					allowBlank: false,
-					bind: '{theUser.login}',
+					bind: {
+						value: '{theUser.login}',
+						readOnly: '{!phantom}'
+					},
 					publishes: ['value']
 				},
 				{
@@ -39,7 +41,28 @@ Ext.define('YesdoApp.view.user.User', {
 					inputType: 'password',
 					minLength: 6,
 					//hidden: true,
-					name: 'password'
+					name: 'password',
+					bind: {
+						hidden: '{!phantom}'
+					}
+				},
+				{
+					fieldLabel: 'merchant',
+					xtype: 'combo',
+					name: 'merchantId',
+					emptyText: 'empty',
+					editable: false,
+					allowBlank: false,
+					displayField: 'name',
+					valueField: 'id',
+					bind: {
+						value: '{theUser.merchant.id}',
+						readOnly: '{!phantom}'
+					},
+					store: {
+						model: 'YesdoApp.model.Merchant',
+						autoLoad: true
+					}
 				},
 				{
 					xtype: 'itemselectorfield',

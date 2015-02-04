@@ -57,7 +57,8 @@ Ext.define('YesdoApp.view.main.Main', {
 						items: [
 							{
 								text: 'Пользователи',
-								href: '#users'
+								href: '#users',
+								plugins: 'access', access: 'MANAGE_USERS'
 							},
 							{
 								text: 'Настройки',

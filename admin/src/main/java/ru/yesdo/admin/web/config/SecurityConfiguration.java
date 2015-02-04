@@ -78,6 +78,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //					.antMatchers("/locales", "/languages", "/currency", "/users/changepassword").permitAll()
 					.antMatchers("/index").permitAll()
 					.antMatchers("/user/permissions").permitAll()
+					.antMatchers("/users/**").hasAuthority("MANAGE_USERS")
 					.antMatchers("/**").fullyAuthenticated()
 				.and()
 				.exceptionHandling()

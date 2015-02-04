@@ -3,7 +3,8 @@ Ext.define('YesdoApp.view.user.UserController', {
 	alias: 'controller.users',
 	requires: [
 		'Ext.window.Toast',
-		'YesdoApp.model.Permission'
+		'YesdoApp.model.Permission',
+		'YesdoApp.model.Merchant'
 	],
 
 
@@ -24,7 +25,8 @@ Ext.define('YesdoApp.view.user.UserController', {
 		var win = Ext.widget('user', {
 			viewModel: {
 				data: {
-					theUser: userRecord
+					theUser: userRecord,
+					phantom: userRecord.phantom
 				},
 				stores: {
 					users: this.getStore('users')
@@ -37,7 +39,7 @@ Ext.define('YesdoApp.view.user.UserController', {
 
 	onSaveClick: function (button) {
 		var form = button.up('form').getForm(), rec, phantom,
-			roleIds = [], win = this.getView(), users;
+			 win = this.getView(), users;
 
 		if (form.isValid()) {
 			rec = this.getViewModel().getData().theUser;
@@ -45,23 +47,19 @@ Ext.define('YesdoApp.view.user.UserController', {
 			phantom = rec.phantom;
 			Ext.Msg.wait('Сохранение', 'Сохранение пользователя...');
 
-			rec.roles().each(function (d) {
-				roleIds.push(d.getId())
-			});
-
+			var extraParams = {};
+			if (rec.phantom) {
+				extraParams.password = form.getValues().password;
+			}
+			extraParams.merchantId = form.getValues().merchantId;
 			rec.save({
 				scope: this,
-				params: function (options) {
-					options.jsonData.roleIds = roleIds;
-					if (rec.phantom) {
-						options.jsonData.password = form.getValues().password;
-					}
-				},
+				params: extraParams,
 				callback: function (record, operation, success) {
 					Ext.Msg.hide();
 					if (success) {
 						if (users && phantom) {
-							users.add(rec);
+							users.reload();
 						}
 						win.close();
 						Ext.toast('Пользователь сохранен', 'Сохранение', 't')

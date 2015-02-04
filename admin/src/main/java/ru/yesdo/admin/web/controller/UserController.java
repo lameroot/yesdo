@@ -10,9 +10,11 @@ import ru.yesdo.admin.web.domain.UserForm;
 import ru.yesdo.admin.web.security.SecurityHelpers;
 import ru.yesdo.model.Permission;
 import ru.yesdo.model.User;
+import ru.yesdo.repository.MerchantRepository;
 import ru.yesdo.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
@@ -29,6 +31,9 @@ public class UserController {
 	private UserRepository userRepository;
 
 	@Autowired
+	private MerchantRepository merchantRepository;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@RequestMapping(method = RequestMethod.GET, params = "!filter")
@@ -43,19 +48,22 @@ public class UserController {
 		copyProperties(userForm, user);
 		user.setLogin(userForm.getLogin());
 		user.setPasswordHash(passwordEncoder.encode(userForm.getPassword()));
+		userRepository.save(user);
+		user.setMerchant(merchantRepository.findOne(userForm.getMerchantId()));
 		return userRepository.save(user);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public User updateUser(@PathVariable Long id, @RequestBody UserForm userForm) {
 		User user = userRepository.findOne(id);
-		user.getPermissions().clear();
 		copyProperties(userForm, user);
 
 		return userRepository.save(user);
 	}
 
 	private void copyProperties(UserForm userForm, User user) {
+		user.getPermissions().clear();
+		user.getPermissions().addAll(Arrays.asList(userForm.getPermissions()));
 //		if (userForm.getEmail() != null) {
 //			user.setEmail(userForm.getEmail());
 //		}

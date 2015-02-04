@@ -1,6 +1,9 @@
 package ru.yesdo.admin.web.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import ru.yesdo.model.Permission;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * User: Dikansky
@@ -13,7 +16,19 @@ public class UserForm {
 	@NotEmpty
 	private String password;
 
-	private String[] permissions;
+	@NotNull
+	private Permission[] permissions;
+
+	@NotNull
+	private Long merchantId;
+
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
 
 	public String getLogin() {
 		return login;
@@ -23,11 +38,11 @@ public class UserForm {
 		this.login = login;
 	}
 
-	public String[] getPermissions() {
+	public Permission[] getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(String[] permissions) {
+	public void setPermissions(Permission[] permissions) {
 		this.permissions = permissions;
 	}
 

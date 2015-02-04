@@ -4,7 +4,7 @@ Ext.define('YesdoApp.model.User', {
 	fields: [
 		{name: 'login', type: 'string'},
 		{name: 'permissions', useNull: true},
-		{name: 'merchantId', reference: 'Merchant', allowBlank: false }
+		{name: 'merchant', persist: false }
 	],
 
 	validators: {

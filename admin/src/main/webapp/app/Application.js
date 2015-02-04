@@ -14,7 +14,8 @@ Ext.define('YesdoApp.Application', {
 		'Ext.tip.QuickTipManager',
 		'Ext.app.bindinspector.*',
 		'YesdoApp.LoginManager',
-		'YesdoApp.Format'
+		'YesdoApp.Format',
+		'YesdoApp.plugin.Access'
 	],
 
 	views: [

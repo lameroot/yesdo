@@ -4,6 +4,7 @@ package ru.yesdo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,7 +22,7 @@ public class User {
 	@GeneratedValue(generator = "user_id_gen", strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@ElementCollection(fetch = FetchType.EAGER)
-	private Set<Permission> permissions;//пермиссии которыми обладает пользваотель
+	private Set<Permission> permissions = new HashSet<>();//пермиссии которыми обладает пользваотель
 	//private Merchant merchant;//если это пользователь мерчанта, то это он
 	//whole params as UserDetails from Spring Security
 	private String login;
