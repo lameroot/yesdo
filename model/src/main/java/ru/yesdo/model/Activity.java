@@ -1,12 +1,13 @@
 package ru.yesdo.model;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.GraphProperty;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.*;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by lameroot on 13.12.14.
@@ -42,6 +43,16 @@ public class Activity {
     private Set<Activity> child;//список дочерних
     private Set<Merchant> merchants;//список мерчантов, которые находятся в этой активити
     private Set<Product> products;//список продуктов, которые включены в эту активити
+
+
+    public Activity() {
+        //this.uniqueIndex = UUID.randomUUID().toString();
+    }
+
+    public Activity(String title) {
+        this.title = title;
+    }
+
 
     public Long getId() {
         return id;
