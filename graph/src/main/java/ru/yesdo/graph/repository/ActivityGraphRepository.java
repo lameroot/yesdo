@@ -11,6 +11,6 @@ import ru.yesdo.model.Activity;
 @Repository
 public interface ActivityGraphRepository extends GraphRepository<Activity>{
 
-
+    public Activity findByName(String name);
     public Activity findByTitle(String title);//possible is not uniqeu
 }

@@ -4,6 +4,7 @@ import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,31 +24,30 @@ import java.util.Set;
  * Также предусмотреть возможность на этой же странице видеть продукты, которые создают сами пользователи, должна быть инфа кто и что создал. (!!!данный функйиона можно только предусмотреть но не делать)
  */
 @NodeEntity
+@Entity
+@Table(name = "product")
 public class Product {
 
     @GraphId
+    @Id
+    @SequenceGenerator(name = "product_id_gen", sequenceName = "product_seq")
+    @GeneratedValue(generator = "product_id_gen", strategy = GenerationType.SEQUENCE)
     private Long id;
     @GraphProperty
     private String title;//название продукта
-    private MerchantProductRelationship relationship;//for test
-    private Blog description;//краткое описание продукта
-
-
-    private Set<Media> medias;//список картинок или видео для данного продукта
-    private Location location;//где находится данный продукт или услуга
-
+    @ManyToOne
+    @JoinColumn(name = "fk_merchant_id",nullable = true)
     private Merchant merchant;//мерчант, кому пренадлежит данная услуга
+    @ManyToOne
+    @JoinColumn(name = "fk_user_id",nullable = false)
     private User owner;//пользователь, который мог создать данный продукт. То есть это или пользователь от данного мерчанта, так и простой
-    //пользователь, который на сайте создал свой продукт
-    private Publicity publicity;//публичность данного продукта, он может быть скрытый, может быть приватный, публичный, только для избранных
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
     private Date createdAt;//дата создания
-    private Date expirationAt;//дата истечения возможности использования продуктом
-    private Long amount;//цена
-    private TimeProduct timeProduct;//время в которое можно воспользоваться услугой
-    private ProductType productType;//тип продукта
-    private Set<Tag> tags;//список тэгов, кол-во должно ограничиваться пермиссией, если это делает мерчант
-    private Set<User> users;//список пользоватлей, кто воспользовался данной услугой или в случае с пользователем, кто просмотрел или лайкнул данный продукт
-    private boolean enabled;//доступен или нет.
+
+    @Transient
+    //@OneToOne(mappedBy = "product",cascade = CascadeType.ALL)
+    private MerchantProductRelationship relationship;
 
     public Long getId() {
         return id;
@@ -73,14 +73,6 @@ public class Product {
         this.relationship = relationship;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public Merchant getMerchant() {
         return merchant;
     }
@@ -97,29 +89,17 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-    public ProductType getProductType() {
-        return productType;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-    public TimeProduct getTimeProduct() {
-        return timeProduct;
-    }
-
-    public void setTimeProduct(TimeProduct timeProduct) {
-        this.timeProduct = timeProduct;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-
+//    private Blog description;//краткое описание продукта
+//    private Set<Media> medias;//список картинок или видео для данного продукта
+//    private Location location;//где находится данный продукт или услуга
+//    private Set<Tag> tags;//список тэгов, кол-во должно ограничиваться пермиссией, если это делает мерчант
+//    private Set<User> users;//список пользоватлей, кто воспользовался данной услугой или в случае с пользователем, кто просмотрел или лайкнул данный продукт
 }

@@ -2,6 +2,9 @@ package ru.yesdo.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.*;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,22 +17,27 @@ import java.util.Set;
  * Также предусмотреть возможность авторизации через соц. сети (!!!на данном этапе делать не надо)
  * В оконсоли должна быть отдельная вкладка для управления пользователями, можно всё также как это сделано у нас в консоли
  */
+@NodeEntity
 @Entity
 @Table(name = "users")
 public class User {
+
+    public static final String INDEX_FOR_LOGIN = "user_login";
+
+    @GraphId
 	@Id
 	@SequenceGenerator(name = "user_id_gen", sequenceName = "user_seq")
 	@GeneratedValue(generator = "user_id_gen", strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Set<Permission> permissions = new HashSet<>();//пермиссии которыми обладает пользваотель
-	//private Merchant merchant;//если это пользователь мерчанта, то это он
-	//whole params as UserDetails from Spring Security
+	@GraphProperty
+    @Indexed(indexName = INDEX_FOR_LOGIN, indexType = IndexType.SIMPLE)
 	private String login;
 	@Column(name = "password_hash")
 	private String passwordHash;
-	//etc
 
+    @RelatedTo(type = "USER", direction = Direction.INCOMING)
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	Merchant merchant;
 

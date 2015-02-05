@@ -2,14 +2,10 @@ package ru.yesdo.graph.config;
 
 
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
-import org.springframework.data.neo4j.cross_store.config.CrossStoreNeo4jConfiguration;
 import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -20,10 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableNeo4jRepositories(basePackages = "ru.yesdo.graph.repository")
 @ComponentScan("ru.yesdo.graph.service")
-public class Neo4jConfiguration extends
-        //CrossStoreNeo4jConfiguration
-        org.springframework.data.neo4j.config.Neo4jConfiguration
-        {
+public class Neo4jConfiguration extends org.springframework.data.neo4j.config.Neo4jConfiguration {
 
 
     private static final String DB_PATH = "data/graph.db";
@@ -31,8 +24,6 @@ public class Neo4jConfiguration extends
     public Neo4jConfiguration() {
         setBasePackage("ru.yesdo.model");
     }
-
-
 
 //    @Bean
 //    public GraphDatabaseService graphDatabaseService() {

@@ -10,16 +10,16 @@ import java.util.Set;
  */
 public class MerchantData {
 
-    private String merchantLogin;
+    private String name;
     private String title;
     private Set<Activity> activities;
 
-    public String getMerchantLogin() {
-        return merchantLogin;
+    public String getName() {
+        return name;
     }
 
-    public MerchantData setMerchantLogin(String merchantLogin) {
-        this.merchantLogin = merchantLogin;
+    public MerchantData setName(String name) {
+        this.name = name;
         return this;
     }
 

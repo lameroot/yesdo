@@ -1,13 +1,10 @@
 package ru.yesdo.model;
 
-import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
 import org.springframework.data.neo4j.support.index.IndexType;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Created by lameroot on 13.12.14.
@@ -23,34 +20,40 @@ import java.util.UUID;
  * которые храним в БД, необходимо также сохранять граф узлов. Используем для этого spring-data-neo4j .
  * !!!На данном этапе делаем только сохранение в БД с помощью хибернайта и spring-data .
  */
-//http://docs.spring.io/spring-data/data-neo4j/docs/3.2.1.RELEASE/reference/html/#reference_cross-store
-@NodeEntity(partial = true)
-//@Entity
-//@Table(name = "activity")
+
+@NodeEntity
+@Entity
+@Table(name = "activity")
 public class Activity {
 
     public final static String ROOT_TITLE = "root_activity";
+    public final static String INDEX_FOR_NAME = "activity_name";
+    public final static String INDEX_FOR_TITLE = "activity_title";
 
     @GraphId
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;//
+    @SequenceGenerator(name = "activity_id_gen", sequenceName = "activity_seq")
+    @GeneratedValue(generator = "activity_id_gen", strategy = GenerationType.SEQUENCE)
+    private Long id;
     @GraphProperty
-    @Indexed
-    private String title;//название
+    @Indexed(indexName = INDEX_FOR_NAME,indexType = IndexType.SIMPLE, unique = true)
+    private String name;
+    @GraphProperty
+    @Indexed(indexName = INDEX_FOR_TITLE, indexType = IndexType.FULLTEXT)
+    private String title;
+    @Transient
     private Set<Activity> parents;//список родителей
+    @Transient
     private Set<Activity> child;//список дочерних
+    @Transient
     private Set<Merchant> merchants;//список мерчантов, которые находятся в этой активити
-    private Set<Product> products;//список продуктов, которые включены в эту активити
 
 
     public Activity() {
-        //this.uniqueIndex = UUID.randomUUID().toString();
     }
 
-    public Activity(String title) {
-        this.title = title;
+    public Activity(String name) {
+        this.name = name;
     }
 
 
@@ -94,11 +97,11 @@ public class Activity {
         this.merchants = merchants;
     }
 
-    public Set<Product> getProducts() {
-        return products;
+    public String getName() {
+        return name;
     }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -31,7 +31,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
     }
 
     private Merchant create(String title, String... activityTitles) {
-        MerchantData merchantData = new MerchantData().setTitle(title);
+        MerchantData merchantData = new MerchantData().setName(title).setTitle(title);
         for (String activityTitle : activityTitles) {
             Activity activity = findActivityByTitle(activityTitle);
             assertNotNull(activity);
@@ -44,6 +44,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
 
     @Test
     public void testCreateMerchants() {
+        super.testCreateActivities();
         Merchant m11 = create("m11","a11");
         Merchant m12 = create("m12","a13");
         Merchant m21 = create("m21","a21","a22");
@@ -53,8 +54,8 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
         Merchant m34 = create("m34","a32");
     }
 
-    protected Merchant findMerchantByTitle(String title) {
-        return merchantGraphRepository.findByMerchantLogin(title);
+    protected Merchant findMerchantByName(String title) {
+        return merchantGraphRepository.findByName(title);
     }
 
     @Test
@@ -100,14 +101,14 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
 
 
         MerchantData merchantData1 = new MerchantData()
-                .setMerchantLogin("merchant1-level1")
+                .setName("merchant1-level1")
                 .setTitle("merchant1-level1-title")
                 .addActivity(activityLevel1Num1);
         Merchant merchant1 = merchantGraphService.create(merchantData1);
         assertNotNull(merchant1);
 
         MerchantData merchantData2 = new MerchantData()
-                .setMerchantLogin("merchant2-level1")
+                .setName("merchant2-level1")
                 .setTitle("merchant2-level1-title")
                 .addActivity(activityLevel1Num1)
                 .addActivity(activityLevel1Num2);
@@ -115,7 +116,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
         assertNotNull(merchant2);
 
         MerchantData merchantData3 = new MerchantData()
-                .setMerchantLogin("merchant1-level2")
+                .setName("merchant1-level2")
                 .setTitle("merchant1-level2-title")
                 .addActivity(activityLevel2Num1)
                 .addActivity(activityLevel2Num2);
@@ -123,7 +124,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
         assertNotNull(merchant3);
 
         //-----------//
-        Merchant foundMerchant1 = merchantGraphRepository.findByMerchantLogin(merchant1.getMerchantLogin());
+        Merchant foundMerchant1 = merchantGraphRepository.findByName(merchant1.getName());
         assertNotNull(foundMerchant1.getId());
         assertTrue(foundMerchant1.getActivities().size() == 3);
         neo4jTemplate.fetch(foundMerchant1.getActivities());
@@ -131,7 +132,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
         contains(foundMerchant1.getActivities(),activityLevel0Num1);
         contains(foundMerchant1.getActivities(),activityLevel0Num2);
 
-        Merchant foundMerchant2 = merchantGraphRepository.findByMerchantLogin(merchant2.getMerchantLogin());
+        Merchant foundMerchant2 = merchantGraphRepository.findByName(merchant2.getName());
         assertNotNull(foundMerchant2.getId());
         assertTrue(foundMerchant2.getActivities().size() == 5);
         neo4jTemplate.fetch(foundMerchant2.getActivities());
@@ -142,7 +143,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
         contains(foundMerchant2.getActivities(),activityLevel1Num2);
 
 
-        Merchant foundMerchant3 = merchantGraphRepository.findByMerchantLogin(merchant3.getMerchantLogin());
+        Merchant foundMerchant3 = merchantGraphRepository.findByName(merchant3.getName());
         assertNotNull(foundMerchant3.getId());
         neo4jTemplate.fetch(foundMerchant3.getActivities());
         assertTrue(foundMerchant3.getActivities().size() == 7);
@@ -156,30 +157,4 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
 
     }
 
-
-    @Test
-    public void testAddProduct() {
-        testCreateMerchants();
-
-        Merchant merchant1 = merchantGraphRepository.findByMerchantLogin("merchant1-level1");
-        assertNotNull(merchant1);
-        ProductData productData1_1 = new ProductData()
-                .setProductType(ProductType.SERVICE)
-                .setAmount(100L)
-                .setCreatedAt(new Date())
-                .setTitle("product1_merchant1-level1");
-                ;
-        merchantGraphService.addProducts(merchant1,productData1_1);
-
-        Merchant merchantFound1 = merchantGraphRepository.findByMerchantLogin("merchant1-level1");
-        assertNotNull(merchantFound1);
-
-        Set<Product> products = merchantGraphRepository.findProducts(merchantFound1);
-        neo4jTemplate.fetch(merchantFound1.getMerchantProducts());
-        assertTrue(merchantFound1.getMerchantProducts().size() == 1);
-        for (MerchantProductRelationship merchantProductRelationship : neo4jTemplate.fetch(merchantFound1.getMerchantProducts())) {
-            System.out.println(merchantProductRelationship.getProduct().getTitle());
-        }
-
-    }
 }

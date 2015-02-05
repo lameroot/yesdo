@@ -1,8 +1,6 @@
 package ru.yesdo.graph.data;
 
-import ru.yesdo.model.Location;
-import ru.yesdo.model.ProductType;
-import ru.yesdo.model.TimeProduct;
+import ru.yesdo.model.*;
 
 import java.util.Date;
 
@@ -12,6 +10,7 @@ import java.util.Date;
 public class ProductData {
 
     private String title;
+    private Merchant merchant;
 
     private Location location;
     private ProductType productType;
@@ -75,6 +74,15 @@ public class ProductData {
 
     public ProductData setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+        return this;
+    }
+
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public ProductData setMerchant(Merchant merchant) {
+        this.merchant = merchant;
         return this;
     }
 }

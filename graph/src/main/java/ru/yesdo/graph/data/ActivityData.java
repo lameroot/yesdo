@@ -11,8 +11,8 @@ import java.util.UUID;
  */
 public class ActivityData {
 
+    private String name;
     private String title;
-
     private Set<Activity> parents;
 
     public String getTitle() {
@@ -24,7 +24,14 @@ public class ActivityData {
         return this;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public ActivityData setName(String name) {
+        this.name = name;
+        return this;
+    }
 
     public Set<Activity> getParents() {
         return parents;

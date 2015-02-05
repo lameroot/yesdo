@@ -6,14 +6,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.yesdo.model.Merchant;
-import ru.yesdo.model.Permission;
-import ru.yesdo.model.User;
+import ru.yesdo.model.*;
+import ru.yesdo.repository.ActivityRepository;
 import ru.yesdo.repository.MerchantRepository;
+import ru.yesdo.repository.ProductRepository;
 import ru.yesdo.repository.UserRepository;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,12 @@ public class SpringDataConfig  implements InitializingBean {
 
 	@Autowired
 	private MerchantRepository merchantRepository;
+
+    @Resource
+    private ActivityRepository activityRepository;
+
+    @Resource
+    private ProductRepository productRepository;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -68,6 +76,21 @@ public class SpringDataConfig  implements InitializingBean {
 		u.setPermissions(EnumSet.allOf(Permission.class));
 		u = userRepository.save(u);
 
+        /*
+        Activity activity = new Activity(Activity.ROOT_TITLE);
+        activity.setTitle("this is root activity");
+        activityRepository.save(activity);
 
+        Product product = new Product();
+        product.setOwner(u);
+        product.setMerchant(merchant);
+        product.setCreatedAt(new Date());
+        MerchantProductRelationship relationship = new MerchantProductRelationship();
+        relationship.setMerchant(merchant);
+        relationship.setAmount(100L);
+        relationship.setProduct(product);
+        product.setRelationship(relationship);
+        productRepository.save(product);
+        */
 	}
 }

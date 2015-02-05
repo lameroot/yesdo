@@ -4,6 +4,7 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
 import ru.yesdo.graph.data.ProductData;
 import ru.yesdo.graph.repository.ProductGraphRepository;
+import ru.yesdo.model.MerchantProductRelationship;
 import ru.yesdo.model.Product;
 
 import javax.annotation.Resource;
@@ -24,14 +25,20 @@ public class ProductGraphService {
     public Product create(ProductData productData) {
         Product product = new Product();
         product.setTitle(productData.getTitle());
-        product.setAmount(productData.getAmount());
         product.setCreatedAt(productData.getCreatedAt());
-        product.setLocation(productData.getLocation());
-        product.setProductType(productData.getProductType());
-        product.setTimeProduct(productData.getTimeProduct());
+        product.setMerchant(productData.getMerchant());
 
+        MerchantProductRelationship relationship = new MerchantProductRelationship();
+        relationship.setAmount(productData.getAmount());
+        relationship.setProductType(productData.getProductType());
+        relationship.setTimeProduct(productData.getTimeProduct());
+
+        product.setRelationship(relationship);
         return productGraphRepository.save(product);
     }
 
+    public Product addMerchantRelationship(Product product) {
+        return product;
+    }
 
 }

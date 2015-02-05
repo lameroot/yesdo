@@ -32,7 +32,7 @@ public class ActivityGraphServiceTest extends Neo4jConfigurationTest {
     }
 
     protected Activity findActivityByTitle(String title) {
-        return activityGraphRepository.findByTitle(title);
+        return activityGraphRepository.findByName(title);
     }
 
     @Before
@@ -46,7 +46,7 @@ public class ActivityGraphServiceTest extends Neo4jConfigurationTest {
     }
 
     private Activity create(String title,Activity...parents) {
-        ActivityData activityData = new ActivityData().setTitle(title);
+        ActivityData activityData = new ActivityData().setName(title).setTitle(title);
         for (Activity parent : parents) {
             activityData.addParent(parent);
         }
@@ -62,9 +62,15 @@ public class ActivityGraphServiceTest extends Neo4jConfigurationTest {
         Activity a12 = create("a12",a0);
         Activity a13 = create("a13",a0);
         Activity a21 = create("a21",a11,a13);
-        Activity a22 = create("a11",a13);
+        Activity a22 = create("a22",a13);
         Activity a31 = create("a31",a21);
-        Activity a32 = create("a31",a21);
+        Activity a32 = create("a32",a21);
+    }
+
+    @Test
+    public void testCrateOne() {
+        Activity a0 = create(Activity.ROOT_TITLE);
+
     }
 
     @Test

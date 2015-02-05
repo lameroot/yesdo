@@ -16,7 +16,7 @@ import java.util.Set;
 @Repository
 public interface MerchantGraphRepository extends GraphRepository<Merchant>, RelationshipOperationsRepository<MerchantProductRelationship> {
 
-    public Merchant findByMerchantLogin(String merchantLogin);
+    public Merchant findByName(String name);
 
     @Query("start merchant=node({0}) match merchant-[:PRODUCT_IN]->product return product")
     public Set<Product> findProducts(Merchant merchant);

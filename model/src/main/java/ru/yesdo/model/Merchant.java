@@ -2,6 +2,7 @@ package ru.yesdo.model;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.support.index.IndexType;
 
 import java.util.HashSet;
@@ -20,47 +21,35 @@ import java.util.UUID;
 @Table(name = "merchant")
 @NodeEntity
 public class Merchant {
+
+    public final static String INDEX_FOR_NAME = "merchant_name";
+    public final static String INDEX_FOR_TITLE = "merchant_title";
+
 	@Id
 	@SequenceGenerator(name = "merchant_id_gen", sequenceName = "merchant_seq")
 	@GeneratedValue(generator = "merchant_id_gen", strategy = GenerationType.SEQUENCE)
     @GraphId
 	private Long id;
-
+    @GraphProperty
+    @Indexed(indexName = INDEX_FOR_NAME, indexType = IndexType.SIMPLE, unique = true)
 	private String name;
+    @GraphProperty
+    @Indexed(indexName = INDEX_FOR_TITLE, indexType = IndexType.FULLTEXT)
     private String title;
-
+    @RelatedTo(type = "USER", direction = Direction.OUTGOING)
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<User> users;
-
+    @RelatedTo(type = "PRODUCT", direction = Direction.OUTGOING)
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<Product> products = new HashSet<>();
     @RelatedTo(type = "MERCHANT", direction = Direction.INCOMING)
     @Transient
     private Set<Activity> activities = new HashSet<>();//список активити в которые может вступать мерчант. кол-во активити должно ограничиваться пермиссией
-    @RelatedToVia
-    @Transient
-    private Set<MerchantProductRelationship> merchantProducts = new HashSet<>();
-    
-    public MerchantProductRelationship addMerchantProduct(Product product, Long amount) {
-        MerchantProductRelationship merchantProductRelationship = new MerchantProductRelationship(this,product, amount);
-        merchantProducts.add(merchantProductRelationship);
-        return merchantProductRelationship;
+
+    public Merchant() {}
+    public Merchant(String name) {
+        this.name = name;
     }
-
-    public Set<MerchantProductRelationship> getMerchantProducts() {
-        return merchantProducts;
-    }
-
-    public void setMerchantProducts(Set<MerchantProductRelationship> merchantProducts) {
-        this.merchantProducts = merchantProducts;
-    }
-
-//    private Contact contact;//контактная информация для мерчанта
-//    private Set<Tag> tags;//список тэгов, по которым может осуществляться поиск н-р, должно ограничиваться пермиссией кол-во
-//    private Set<Media> medias;//список меди-ресурсов для данного мерчанта, это могут быть загружаемые видео или картинки
-//    private Blog description;//описание компании
-//    private Set<Blog> blogs;//список блогов, которые есть у мерчанта
-//    private Set<Option> options;//список пермиссий, которыми он обладает
-//    private boolean enabled;//доступен или нет
-
 
 	public Long getId() {
 		return id;
@@ -94,7 +83,6 @@ public class Merchant {
         this.title = title;
     }
 
-
     public Set<Activity> getActivities() {
         return activities;
     }
@@ -102,4 +90,20 @@ public class Merchant {
     public void setActivities(Set<Activity> activities) {
         this.activities = activities;
     }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    //    private Contact contact;//контактная информация для мерчанта
+//    private Set<Tag> tags;//список тэгов, по которым может осуществляться поиск н-р, должно ограничиваться пермиссией кол-во
+//    private Set<Media> medias;//список меди-ресурсов для данного мерчанта, это могут быть загружаемые видео или картинки
+//    private Blog description;//описание компании
+//    private Set<Blog> blogs;//список блогов, которые есть у мерчанта
+//    private Set<Option> options;//список пермиссий, которыми он обладает
+//    private boolean enabled;//доступен или нет
 }
