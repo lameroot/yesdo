@@ -8,4 +8,6 @@ import ru.yesdo.model.Merchant;
  * Date: 02.02.2015
  */
 public interface MerchantRepository extends CrudRepository<Merchant, Long> {
+
+    public Merchant findByName(String name);
 }

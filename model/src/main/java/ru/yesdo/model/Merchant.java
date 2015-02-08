@@ -1,5 +1,6 @@
 package ru.yesdo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
 import org.springframework.data.neo4j.annotation.Query;
@@ -32,19 +33,29 @@ public class Merchant {
 	private Long id;
     @GraphProperty
     @Indexed(indexName = INDEX_FOR_NAME, indexType = IndexType.SIMPLE, unique = true)
+    @Column(name = "name", unique = true)
 	private String name;
     @GraphProperty
     @Indexed(indexName = INDEX_FOR_TITLE, indexType = IndexType.FULLTEXT)
     private String title;
+
     @RelatedTo(type = "USER", direction = Direction.OUTGOING)
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<User> users;
+
     @RelatedTo(type = "PRODUCT", direction = Direction.OUTGOING)
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "merchant", cascade = CascadeType.ALL)
     private Set<Product> products = new HashSet<>();
+
     @RelatedTo(type = "MERCHANT", direction = Direction.INCOMING)
-    @Transient
-    private Set<Activity> activities = new HashSet<>();//список активити в которые может вступать мерчант. кол-во активити должно ограничиваться пермиссией
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "activity_merchant", joinColumns = {@JoinColumn(name = "fk_merchant_id",nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "fk_activity_id", nullable = false, updatable = false)})
+    private Set<Activity> activities;//список активити в которые может вступать мерчант. кол-во активити должно ограничиваться пермиссией
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "merchant")
+    private Set<Offer> offers;
+
 
     public Merchant() {}
     public Merchant(String name) {
@@ -83,6 +94,7 @@ public class Merchant {
         this.title = title;
     }
 
+    @JsonIgnore
     public Set<Activity> getActivities() {
         return activities;
     }
@@ -91,12 +103,28 @@ public class Merchant {
         this.activities = activities;
     }
 
+    @JsonIgnore
     public Set<Product> getProducts() {
         return products;
     }
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @JsonIgnore
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
+
+    public Merchant addActivity(Activity activity) {
+        if ( null == activities ) this.activities = new HashSet<>();
+        this.activities.add(activity);
+        return this;
     }
 
     //    private Contact contact;//контактная информация для мерчанта

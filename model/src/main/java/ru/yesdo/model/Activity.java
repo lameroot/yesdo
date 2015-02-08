@@ -4,6 +4,7 @@ import org.springframework.data.neo4j.annotation.*;
 import org.springframework.data.neo4j.support.index.IndexType;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -35,17 +36,26 @@ public class Activity {
     @SequenceGenerator(name = "activity_id_gen", sequenceName = "activity_seq")
     @GeneratedValue(generator = "activity_id_gen", strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @GraphProperty
     @Indexed(indexName = INDEX_FOR_NAME,indexType = IndexType.SIMPLE, unique = true)
+    @Column(unique = true)
     private String name;
+
     @GraphProperty
     @Indexed(indexName = INDEX_FOR_TITLE, indexType = IndexType.FULLTEXT)
+    @Column
     private String title;
-    @Transient
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "activity_family",joinColumns = {@JoinColumn(name = "fk_child_id",updatable = false)},
+    inverseJoinColumns = {@JoinColumn(name = "fk_parent_id",nullable = false,updatable = false)})
     private Set<Activity> parents;//список родителей
-    @Transient
+
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "parents", cascade = CascadeType.ALL)
     private Set<Activity> child;//список дочерних
-    @Transient
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "activities")
     private Set<Merchant> merchants;//список мерчантов, которые находятся в этой активити
 
 
@@ -103,5 +113,18 @@ public class Activity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Activity addParent(Activity activity) {
+        if ( null == this.parents ) this.parents = new HashSet<>();
+        this.parents.add(activity);
+        return this;
+    }
+
+    //todo: протестировать
+    public Activity addChildren(Activity activity) {
+        if ( null == this.child ) this.child = new HashSet<>();
+        activity.addParent(this);
+        return this;
     }
 }

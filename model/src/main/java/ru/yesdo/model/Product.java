@@ -36,8 +36,11 @@ public class Product {
     @GraphProperty
     private String title;//название продукта
     @ManyToOne
-    @JoinColumn(name = "fk_merchant_id",nullable = true)
+    @JoinColumn(name = "fk_merchant_id",nullable = false)
     private Merchant merchant;//мерчант, кому пренадлежит данная услуга
+
+    @Transient
+    @Deprecated// пользователя не будет в продукте
     @ManyToOne
     @JoinColumn(name = "fk_user_id",nullable = false)
     private User owner;//пользователь, который мог создать данный продукт. То есть это или пользователь от данного мерчанта, так и простой

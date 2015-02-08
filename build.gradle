@@ -33,6 +33,11 @@ subprojects {
 	}
 
 	dependencies {
+		compile 'com.h2database:h2:1.4.+'
+		compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+		compile "org.hibernate:hibernate-c3p0:${hibernateVersion}"
+		compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
+
 		compile 'org.codehaus.groovy:groovy-all:2.3.6'
 
 		compile ('org.springframework.data:spring-data-jpa:1.7.0.RELEASE') {

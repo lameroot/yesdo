@@ -49,13 +49,13 @@ jettyRun {
 [jettyRun, jettyRunWar]*.jettyEnvXml = file('src/main/resources/jetty-env.xml')
 
 dependencies {
-	compile 'com.h2database:h2:1.4.+'
+	//compile 'com.h2database:h2:1.4.+'
 	compile project(':model')
 	compile project(':common-services')
 
-	compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
-	compile "org.hibernate:hibernate-c3p0:${hibernateVersion}"
-	compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
+//	compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+//	compile "org.hibernate:hibernate-c3p0:${hibernateVersion}"
+//	compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
 
 //	compile group: 'org.springframework', name: 'spring-aop', version: springVersion
 //	compile group: 'org.springframework', name: 'spring-aspects', version: springVersion
