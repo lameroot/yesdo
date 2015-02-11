@@ -1,5 +1,6 @@
 package ru.yesdo.model;
 
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
 import org.springframework.data.neo4j.support.index.IndexType;
 
@@ -47,14 +48,17 @@ public class Activity {
     @Column
     private String title;
 
+    @RelatedTo(direction = Direction.OUTGOING, type = "ACTIVITY")
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "activity_family",joinColumns = {@JoinColumn(name = "fk_child_id",updatable = false)},
     inverseJoinColumns = {@JoinColumn(name = "fk_parent_id",nullable = false,updatable = false)})
     private Set<Activity> parents;//список родителей
 
+    @RelatedTo(direction = Direction.INCOMING, type = "ACTIVITY")
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "parents", cascade = CascadeType.ALL)
     private Set<Activity> child;//список дочерних
 
+    @RelatedTo(type = "MERCHANT", direction = Direction.OUTGOING)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "activities")
     private Set<Merchant> merchants;//список мерчантов, которые находятся в этой активити
 

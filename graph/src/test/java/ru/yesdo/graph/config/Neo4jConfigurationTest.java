@@ -12,8 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
+import org.springframework.data.neo4j.support.node.Neo4jHelper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +47,10 @@ public class Neo4jConfigurationTest extends AbstractConfigTest {
         protected GraphDatabaseService graphDatabaseService;
 
 
-
+        //@BeforeTransaction
+        public void setUp() {
+                Neo4jHelper.cleanDb(graphDatabaseService);
+        }
 
 
         @Test

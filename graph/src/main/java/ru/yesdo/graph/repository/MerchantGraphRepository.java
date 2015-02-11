@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.neo4j.repository.RelationshipOperationsRepository;
 import org.springframework.stereotype.Repository;
 import ru.yesdo.model.Merchant;
+import ru.yesdo.model.Offer;
 import ru.yesdo.model.Product;
 import ru.yesdo.model.MerchantProductRelationship;
 
@@ -14,7 +15,7 @@ import java.util.Set;
  * Created by lameroot on 22.01.15.
  */
 @Repository
-public interface MerchantGraphRepository extends GraphRepository<Merchant>, RelationshipOperationsRepository<MerchantProductRelationship> {
+public interface MerchantGraphRepository extends GraphRepository<Merchant>, RelationshipOperationsRepository<Merchant> {
 
     public Merchant findByName(String name);
 

@@ -48,6 +48,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
         Merchant m11 = create("m11","a11");
         Merchant m12 = create("m12","a13");
         Merchant m21 = create("m21","a21","a22");
+        Merchant m22 = create("m22","a22");
         Merchant m31 = create("m31","a31");
         Merchant m32 = create("m32","a31");
         Merchant m33 = create("m33","a32");

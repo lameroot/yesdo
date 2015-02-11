@@ -28,17 +28,13 @@ public class ProductGraphService {
         product.setCreatedAt(productData.getCreatedAt());
         product.setMerchant(productData.getMerchant());
 
-        MerchantProductRelationship relationship = new MerchantProductRelationship();
-        relationship.setAmount(productData.getAmount());
-        relationship.setProductType(productData.getProductType());
-        relationship.setTimeProduct(productData.getTimeProduct());
-
-        product.setRelationship(relationship);
         return productGraphRepository.save(product);
     }
 
     public Product addMerchantRelationship(Product product) {
         return product;
     }
+
+
 
 }

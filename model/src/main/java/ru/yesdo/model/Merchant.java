@@ -51,11 +51,28 @@ public class Merchant {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "activity_merchant", joinColumns = {@JoinColumn(name = "fk_merchant_id",nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "fk_activity_id", nullable = false, updatable = false)})
-    private Set<Activity> activities;//список активити в которые может вступать мерчант. кол-во активити должно ограничиваться пермиссией
+    private Set<Activity> activities = new HashSet<>();//список активити в которые может вступать мерчант. кол-во активити должно ограничиваться пермиссией
 
+    @RelatedTo(type = "OFFER", direction = Direction.OUTGOING, elementClass = Offer.class)
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "merchant")
-    private Set<Offer> offers;
+    private Set<Offer> offers = new HashSet<>();
 
+
+    public Offer concludeOffer(Product product, Offer offerData) {
+        Offer offer = new Offer();
+        offer.setMerchant(this);
+        offer.setProduct(product);
+        offer.setEnabled(offerData.isEnabled());
+        offer.setAmount(offerData.getAmount());
+        offer.setExpirationAt(offerData.getExpirationAt());
+        offer.setProductType(offerData.getProductType());
+        offer.setPublicity(offerData.getPublicity());
+        offer.setTimeProduct(offerData.getTimeProduct());
+
+
+
+        return offer;
+    }
 
     public Merchant() {}
     public Merchant(String name) {

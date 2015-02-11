@@ -11,12 +11,8 @@ public class ProductData {
 
     private String title;
     private Merchant merchant;
-
-    private Location location;
-    private ProductType productType;
-    private TimeProduct timeProduct;
-    private Long amount;
     private Date createdAt;
+    private boolean enabled;
 
     //add user, raitings, friends
 
@@ -30,41 +26,12 @@ public class ProductData {
         return this;
     }
 
-
-
-    public Location getLocation() {
-        return location;
+    public Merchant getMerchant() {
+        return merchant;
     }
 
-    public ProductData setLocation(Location location) {
-        this.location = location;
-        return this;
-    }
-
-    public ProductType getProductType() {
-        return productType;
-    }
-
-    public ProductData setProductType(ProductType productType) {
-        this.productType = productType;
-        return this;
-    }
-
-    public TimeProduct getTimeProduct() {
-        return timeProduct;
-    }
-
-    public ProductData setTimeProduct(TimeProduct timeProduct) {
-        this.timeProduct = timeProduct;
-        return this;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public ProductData setAmount(Long amount) {
-        this.amount = amount;
+    public ProductData setMerchant(Merchant merchant) {
+        this.merchant = merchant;
         return this;
     }
 
@@ -77,12 +44,12 @@ public class ProductData {
         return this;
     }
 
-    public Merchant getMerchant() {
-        return merchant;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public ProductData setMerchant(Merchant merchant) {
-        this.merchant = merchant;
+    public ProductData setEnabled(boolean enabled) {
+        this.enabled = enabled;
         return this;
     }
 }

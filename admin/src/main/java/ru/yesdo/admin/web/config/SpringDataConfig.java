@@ -82,7 +82,6 @@ public class SpringDataConfig  implements InitializingBean {
         activityRepository.save(activity);
 
         Product product = new Product();
-        product.setOwner(u);
         product.setMerchant(merchant);
         product.setCreatedAt(new Date());
         MerchantProductRelationship relationship = new MerchantProductRelationship();

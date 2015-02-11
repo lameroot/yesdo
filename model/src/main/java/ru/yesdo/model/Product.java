@@ -1,8 +1,10 @@
 package ru.yesdo.model;
 
+import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedTo;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -33,24 +35,22 @@ public class Product {
     @SequenceGenerator(name = "product_id_gen", sequenceName = "product_seq")
     @GeneratedValue(generator = "product_id_gen", strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @GraphProperty
     private String title;//название продукта
+
+    @RelatedTo(direction = Direction.INCOMING, type = "PRODUCT")
     @ManyToOne
     @JoinColumn(name = "fk_merchant_id",nullable = false)
     private Merchant merchant;//мерчант, кому пренадлежит данная услуга
 
-    @Transient
-    @Deprecated// пользователя не будет в продукте
-    @ManyToOne
-    @JoinColumn(name = "fk_user_id",nullable = false)
-    private User owner;//пользователь, который мог создать данный продукт. То есть это или пользователь от данного мерчанта, так и простой
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;//дата создания
 
-    @Transient
-    //@OneToOne(mappedBy = "product",cascade = CascadeType.ALL)
-    private MerchantProductRelationship relationship;
+    @Column(name = "enabled")
+    private boolean enabled;
+
 
     public Long getId() {
         return id;
@@ -68,13 +68,6 @@ public class Product {
         this.title = title;
     }
 
-    public MerchantProductRelationship getRelationship() {
-        return relationship;
-    }
-
-    public void setRelationship(MerchantProductRelationship relationship) {
-        this.relationship = relationship;
-    }
 
     public Merchant getMerchant() {
         return merchant;
@@ -92,12 +85,12 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-    public User getOwner() {
-        return owner;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 //    private Blog description;//краткое описание продукта
