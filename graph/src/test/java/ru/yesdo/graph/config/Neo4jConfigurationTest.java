@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
+import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.support.node.Neo4jHelper;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,6 +24,8 @@ import ru.yesdo.graph.AbstractConfigTest;
 import ru.yesdo.graph.repository.ActivityGraphRepository;
 import ru.yesdo.graph.repository.MerchantGraphRepository;
 import ru.yesdo.graph.repository.ProductGraphRepository;
+import ru.yesdo.graph.repository.UserGraphRepository;
+import ru.yesdo.model.User;
 
 import javax.annotation.Resource;
 
@@ -46,6 +49,8 @@ public class Neo4jConfigurationTest extends AbstractConfigTest {
         @Resource
         protected GraphDatabaseService graphDatabaseService;
 
+    @Resource
+    private UserGraphRepository userGraphRepository;
 
         //@BeforeTransaction
         public void setUp() {
@@ -59,7 +64,9 @@ public class Neo4jConfigurationTest extends AbstractConfigTest {
                 assertNotNull(neo4jTemplate);
                 assertNotNull(activityGraphRepository);
                 assertNotNull(platformTransactionManager);
-
+            assertNotNull(userGraphRepository);
+//            Result<User> users = userGraphRepository.findAll();
+//            System.out.println(users);
         }
 
 

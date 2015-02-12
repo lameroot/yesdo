@@ -9,8 +9,7 @@ import java.util.Date;
 /**
  * Created by lameroot on 08.02.15.
  */
-//@RelationshipEntity(type = "OFFER")
-    @NodeEntity
+@NodeEntity
 @Entity
 @Table(name = "offer")
 public class Offer {
@@ -21,14 +20,12 @@ public class Offer {
     @GeneratedValue(generator = "offer_id_gen", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    //@StartNode
     @RelatedTo(direction = Direction.INCOMING,type = "OFFER")
     @Fetch
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_merchant_id", nullable = false)
     private Merchant merchant;
 
-    //@EndNode
     @RelatedTo(direction = Direction.OUTGOING, type = "OFFER")
     @Fetch
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

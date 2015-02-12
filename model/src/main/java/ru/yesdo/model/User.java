@@ -29,17 +29,25 @@ public class User {
 	@SequenceGenerator(name = "user_id_gen", sequenceName = "user_seq")
 	@GeneratedValue(generator = "user_id_gen", strategy = GenerationType.SEQUENCE)
 	private Long id;
+
+    @org.springframework.data.annotation.Transient
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Set<Permission> permissions = new HashSet<>();//пермиссии которыми обладает пользваотель
+
 	@GraphProperty
     @Indexed(indexName = INDEX_FOR_LOGIN, indexType = IndexType.SIMPLE)
 	private String login;
+
+    @org.springframework.data.annotation.Transient
 	@Column(name = "password_hash")
 	private String passwordHash;
 
     @RelatedTo(type = "USER", direction = Direction.INCOMING)
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	Merchant merchant;
+
+    @RelatedToVia(type = "RATED")
+    private Set<Rating> ratings = new HashSet<>();
 
 	@Transient
 	private Set<Product> whiteProducts;

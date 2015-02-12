@@ -43,8 +43,6 @@ public class ProductGraphServiceTest extends MerchantGraphServiceTest {
         Product product = productGraphService.create(productData);
         assertNotNull(product.getId());
 
-
-
         if ( addOffer ) merchantGraphService.concludeOffer(merchant,product,new OfferData().setAmount(amount));
 
         return product;

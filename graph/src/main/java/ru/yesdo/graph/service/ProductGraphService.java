@@ -4,8 +4,7 @@ import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
 import ru.yesdo.graph.data.ProductData;
 import ru.yesdo.graph.repository.ProductGraphRepository;
-import ru.yesdo.model.MerchantProductRelationship;
-import ru.yesdo.model.Product;
+import ru.yesdo.model.*;
 
 import javax.annotation.Resource;
 
@@ -34,6 +33,7 @@ public class ProductGraphService {
     public Product addMerchantRelationship(Product product) {
         return product;
     }
+
 
 
 

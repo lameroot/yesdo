@@ -57,7 +57,6 @@ public class Merchant {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "merchant")
     private Set<Offer> offers = new HashSet<>();
 
-
     public Offer concludeOffer(Product product, Offer offerData) {
         Offer offer = new Offer();
         offer.setMerchant(this);
@@ -68,8 +67,6 @@ public class Merchant {
         offer.setProductType(offerData.getProductType());
         offer.setPublicity(offerData.getPublicity());
         offer.setTimeProduct(offerData.getTimeProduct());
-
-
 
         return offer;
     }
