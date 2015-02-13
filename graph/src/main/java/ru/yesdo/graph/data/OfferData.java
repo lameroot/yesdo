@@ -1,9 +1,6 @@
 package ru.yesdo.graph.data;
 
-import ru.yesdo.model.Offer;
-import ru.yesdo.model.ProductType;
-import ru.yesdo.model.Publicity;
-import ru.yesdo.model.TimeProduct;
+import ru.yesdo.model.*;
 
 import java.util.Date;
 
@@ -18,6 +15,8 @@ public class OfferData {
     private TimeProduct timeProduct;//время в которое можно воспользоваться услугой
     private ProductType productType;//тип продукта
     private Date expirationAt;//
+    private ContactData contactData;
+
 
     public Offer toOffer() {
         Offer offer = new Offer();
@@ -27,6 +26,20 @@ public class OfferData {
         offer.setProductType(getProductType());
         offer.setPublicity(getPublicity());
         offer.setTimeProduct(getTimeProduct());
+
+        if ( null != contactData ) {
+            OfferContact offerContact = new OfferContact();
+            offerContact.setOffer(offer);
+            offerContact.setLocation(contactData.getLon(),contactData.getLat());
+            try {
+                for (ContactParam contactParam : contactData.getContactParams()) {
+                    offerContact.addContactParam(contactParam);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            offer.setContact(offerContact);
+        }
 
         return offer;
     }
@@ -82,5 +95,14 @@ public class OfferData {
 
     public void setExpirationAt(Date expirationAt) {
         this.expirationAt = expirationAt;
+    }
+
+    public ContactData getContactData() {
+        return contactData;
+    }
+
+    public OfferData setContactData(ContactData contactData) {
+        this.contactData = contactData;
+        return this;
     }
 }

@@ -2,6 +2,7 @@ package ru.yesdo.model;
 
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
+import org.springframework.data.neo4j.support.index.IndexType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -56,6 +57,10 @@ public class Offer {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "expiration_at")
     private Date expirationAt;//дата истечения возможности использования продуктом
+
+    @RelatedTo(type = "CONTACT", direction = Direction.OUTGOING)
+    //@Transient
+    private OfferContact contact;
 
     public Long getId() {
         return id;
@@ -127,5 +132,13 @@ public class Offer {
 
     public void setExpirationAt(Date expirationAt) {
         this.expirationAt = expirationAt;
+    }
+
+    public OfferContact getContact() {
+        return contact;
+    }
+
+    public void setContact(OfferContact contact) {
+        this.contact = contact;
     }
 }

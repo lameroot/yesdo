@@ -30,6 +30,24 @@ subprojects {
 		maven {
 			url "http://m2.neo4j.org/content/repositories/releases/"
 		}
+        maven {
+            url "https://raw.github.com/neo4j-contrib/m2/master/releases"
+        }
+        maven {
+            url "https://raw.github.com/neo4j-contrib/m2/master/snapshots"
+        }
+        maven {
+            url "http://download.java.net/maven/2"
+        }
+        maven {
+            url "http://download.osgeo.org/webdav/geotools/"
+        }
+        maven {
+            url "http://repo.opengeo.org"
+        }
+        maven {
+            url "http://download.osgeo.org/webdav/geotools/"
+        }
 	}
 
 	dependencies {

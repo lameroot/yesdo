@@ -67,6 +67,7 @@ public class Merchant {
         offer.setProductType(offerData.getProductType());
         offer.setPublicity(offerData.getPublicity());
         offer.setTimeProduct(offerData.getTimeProduct());
+        offer.setContact(offerData.getContact());
 
         return offer;
     }

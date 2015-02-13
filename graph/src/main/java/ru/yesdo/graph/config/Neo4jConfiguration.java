@@ -1,6 +1,7 @@
 package ru.yesdo.graph.config;
 
 
+import org.neo4j.gis.spatial.SpatialDatabaseService;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,5 +36,11 @@ public class Neo4jConfiguration extends org.springframework.data.neo4j.config.Ne
         // see https://github.com/neo4j/spatial
         SpringRestGraphDatabase database = new SpringRestGraphDatabase("http://localhost:7474/db/data/");
         return database;
+    }
+
+    @Bean
+    public SpatialDatabaseService spatialDatabaseService() {
+        SpatialDatabaseService spatialDatabaseService = new SpatialDatabaseService(graphDatabaseService());
+        return spatialDatabaseService;
     }
 }

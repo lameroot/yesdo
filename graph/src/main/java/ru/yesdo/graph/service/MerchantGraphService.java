@@ -41,6 +41,7 @@ public class MerchantGraphService {
         return merchant;
     }
 
+    //todo: переписать
     public Merchant concludeOffer(Merchant merchant, Product product, OfferData offerData) {
         Merchant m = merchantGraphRepository.findOne(merchant.getId());
         Product p = productGraphRepository.findOne(product.getId());
@@ -52,22 +53,10 @@ public class MerchantGraphService {
         neo4jTemplate.save(newOffer);
         neo4jTemplate.save(newOffer1);
 
-//        Offer of1 = neo4jTemplate.createRelationshipBetween(m, p, Offer.class, "OFFER", true);
-//        of1.setAmount(o.getAmount());
-//        Offer of2 = neo4jTemplate.createRelationshipBetween(m, p, Offer.class, "OFFER1", true);
-//        of2.setAmount(o1.getAmount());
-//        neo4jTemplate.save(of1);
-//        neo4jTemplate.save(of2);
-
         m.getOffers().add(newOffer);
         m.getOffers().add(newOffer1);
 
         System.out.println("----size = " + m.getOffers().size());
-
-//        Offer oo = neo4jTemplate.createRelationshipBetween(m, p, Offer.class, "OFFER", false);
-//        neo4jTemplate.save(oo);
-
-        //merchantGraphRepository.save(m);
 
         return m;
     }
