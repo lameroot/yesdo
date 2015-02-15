@@ -2,6 +2,7 @@ package ru.yesdo.graph.config;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.test.TestGraphDatabaseFactory;
@@ -14,6 +15,8 @@ import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.support.node.Neo4jHelper;
+
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.BeforeTransaction;
@@ -28,6 +31,8 @@ import ru.yesdo.graph.repository.UserGraphRepository;
 import ru.yesdo.model.User;
 
 import javax.annotation.Resource;
+import javax.transaction.TransactionManager;
+import java.util.HashMap;
 
 /**
  * Created by lameroot on 21.01.15.
@@ -49,12 +54,18 @@ public class Neo4jConfigurationTest extends AbstractConfigTest {
         @Resource
         protected GraphDatabaseService graphDatabaseService;
 
+
     @Resource
     private UserGraphRepository userGraphRepository;
 
-        //@BeforeTransaction
+        @BeforeTransaction
+        //@Before
+//        @Transactional
+//        @Rollback(false)
         public void setUp() {
-                Neo4jHelper.cleanDb(graphDatabaseService);
+                System.out.println("-----");
+                neo4jTemplate.query("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r", new HashMap<>());
+                //Neo4jHelper.cleanDb(graphDatabaseService);
         }
 
 
@@ -65,8 +76,15 @@ public class Neo4jConfigurationTest extends AbstractConfigTest {
                 assertNotNull(activityGraphRepository);
                 assertNotNull(platformTransactionManager);
             assertNotNull(userGraphRepository);
+
 //            Result<User> users = userGraphRepository.findAll();
 //            System.out.println(users);
+        }
+
+        @Test
+        @Transactional
+        public void test1() {
+                System.out.println("this is test1");
         }
 
 

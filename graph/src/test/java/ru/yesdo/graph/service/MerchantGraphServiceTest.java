@@ -24,7 +24,7 @@ public class MerchantGraphServiceTest extends ActivityGraphServiceTest {
     @Resource
     protected MerchantGraphService merchantGraphService;
 
-    @Before
+    //@Before
     public void clearMerchantGraphRepositories() {
         activityGraphRepository.deleteAll();
         merchantGraphRepository.deleteAll();

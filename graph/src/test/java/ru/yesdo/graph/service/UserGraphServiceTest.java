@@ -3,7 +3,11 @@ package ru.yesdo.graph.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.data.neo4j.support.node.Neo4jHelper;
+
+import org.springframework.transaction.annotation.Transactional;
 import ru.yesdo.graph.data.UserData;
+import ru.yesdo.graph.repository.ContactGraphRepository;
 import ru.yesdo.graph.repository.UserGraphRepository;
 import ru.yesdo.model.Merchant;
 import ru.yesdo.model.Offer;
@@ -23,13 +27,18 @@ public class UserGraphServiceTest extends ProductGraphServiceTest {
     private UserGraphService userGraphService;
     @Resource
     private UserGraphRepository userGraphRepository;
+    @Resource
+    private ContactGraphRepository contactGraphRepository;
 
-    @Before
+//    @Before
+//    @Neo4jTransactional
     public void clearUsers() {
-        userGraphRepository.deleteAll();
+        //Neo4jHelper.cleanDb(graphDatabaseService);
+        //userGraphRepository.deleteAll();
     }
 
     private User create(String login, String merchantName) {
+
         Merchant merchant = findMerchantByName(merchantName);
         assertNotNull(merchant);
         UserData userData = new UserData().setLogin(login).setMerchant(merchant);

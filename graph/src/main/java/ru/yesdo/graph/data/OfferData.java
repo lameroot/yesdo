@@ -27,10 +27,12 @@ public class OfferData {
         offer.setPublicity(getPublicity());
         offer.setTimeProduct(getTimeProduct());
 
+
         if ( null != contactData ) {
             OfferContact offerContact = new OfferContact();
-            offerContact.setOffer(offer);
+            //offerContact.setOffer(offer);
             offerContact.setLocation(contactData.getLon(),contactData.getLat());
+
             try {
                 for (ContactParam contactParam : contactData.getContactParams()) {
                     offerContact.addContactParam(contactParam);
@@ -40,6 +42,7 @@ public class OfferData {
             }
             offer.setContact(offerContact);
         }
+
 
         return offer;
     }

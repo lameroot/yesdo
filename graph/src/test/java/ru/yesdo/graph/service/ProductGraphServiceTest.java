@@ -7,10 +7,7 @@ import ru.yesdo.graph.data.OfferData;
 import ru.yesdo.graph.data.ProductData;
 import ru.yesdo.graph.repository.OfferGraphRepository;
 import ru.yesdo.graph.repository.ProductGraphRepository;
-import ru.yesdo.model.Merchant;
-import ru.yesdo.model.OfferContact;
-import ru.yesdo.model.Product;
-import ru.yesdo.model.ProductType;
+import ru.yesdo.model.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -28,7 +25,7 @@ public class ProductGraphServiceTest extends MerchantGraphServiceTest {
     @Resource
     private OfferGraphRepository offerGraphRepository;
 
-    @Before
+    //@Before
     public void clearProducts() {
         super.clearMerchantGraphRepositories();
         productGraphRepository.deleteAll();
@@ -48,7 +45,9 @@ public class ProductGraphServiceTest extends MerchantGraphServiceTest {
         Product product = productGraphService.create(productData);
         assertNotNull(product.getId());
 
-        if ( addOffer ) merchantGraphService.concludeOffer(merchant,product,new OfferData().setAmount(amount).setContactData(new ContactData().setLocation(lon, lat)));
+        if ( addOffer ) merchantGraphService.concludeOffer(merchant,product,
+                new OfferData().setAmount(amount).setContactData(new ContactData().setLocation(lon, lat)
+                .addContactParams(new ContactParam("name","stas:" + amount, ContactParam.Type.PROFILE))));
 
         return product;
     }

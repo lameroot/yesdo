@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class Contact {
 
-    public final static String LOCATION_INDEX_NAME = "locations";
+    public final static String LOCATION_INDEX_NAME = "locations22";
 
     @GraphId
     private Long id;

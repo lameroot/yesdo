@@ -9,5 +9,7 @@ dependencies {
     testCompile 'org.neo4j:neo4j-kernel:2.1.5:tests'
     compile 'org.springframework.data:spring-data-neo4j-rest:3.2.1.RELEASE'
     compile 'org.neo4j:neo4j-spatial:0.13-neo4j-2.1.4'
+    compile 'javax.media:jai_core:1.1.3'
+
 
 }

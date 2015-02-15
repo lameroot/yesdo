@@ -1,6 +1,7 @@
 package ru.yesdo.graph.repository;
 
 import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.data.neo4j.repository.SpatialRepository;
 import ru.yesdo.model.Offer;
 
 /**

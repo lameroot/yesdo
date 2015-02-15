@@ -1,7 +1,7 @@
 package ru.yesdo.graph.config;
 
 
-import org.neo4j.gis.spatial.SpatialDatabaseService;
+//import org.neo4j.gis.spatial.SpatialDatabaseService;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 /**
  * Created by lameroot on 21.01.15.
@@ -38,9 +39,13 @@ public class Neo4jConfiguration extends org.springframework.data.neo4j.config.Ne
         return database;
     }
 
+
+
+    /*
     @Bean
     public SpatialDatabaseService spatialDatabaseService() {
         SpatialDatabaseService spatialDatabaseService = new SpatialDatabaseService(graphDatabaseService());
         return spatialDatabaseService;
     }
+    */
 }

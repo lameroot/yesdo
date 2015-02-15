@@ -23,19 +23,13 @@ public class ActivityGraphServiceTest extends Neo4jConfigurationTest {
     @Resource
     private ActivityGraphRepository activityGraphRepository;
 
-    //@Before
-    public void clearAllGraphRepositories() {
-        Map<String, GraphRepository> graphRepositories = applicationContext.getBeansOfType(GraphRepository.class);
-        for (GraphRepository graphRepository : graphRepositories.values()) {
-            graphRepository.deleteAll();
-        }
-    }
+
 
     protected Activity findActivityByTitle(String title) {
         return activityGraphRepository.findByName(title);
     }
 
-    @Before
+    //@Before
     public void clearActivityGraphRepositories() {
         activityGraphRepository.deleteAll();
     }
