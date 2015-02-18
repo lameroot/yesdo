@@ -2,7 +2,9 @@ package ru.yesdo.graph.config;
 
 
 //import org.neo4j.gis.spatial.SpatialDatabaseService;
+import org.neo4j.gis.spatial.SpatialDatabaseService;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -27,25 +29,29 @@ public class Neo4jConfiguration extends org.springframework.data.neo4j.config.Ne
         setBasePackage("ru.yesdo.model");
     }
 
-//    @Bean
-//    public GraphDatabaseService graphDatabaseService() {
-//
-//        return new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
-//    }
+    @Bean
+    public GraphDatabaseService graphDatabaseService() {
+
+        return new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
+    }
+
+    /*
     @Bean
     public GraphDatabaseService graphDatabaseService() {
         // see https://github.com/neo4j/spatial
         SpringRestGraphDatabase database = new SpringRestGraphDatabase("http://localhost:7474/db/data/");
         return database;
     }
+    */
 
 
 
-    /*
+
     @Bean
     public SpatialDatabaseService spatialDatabaseService() {
         SpatialDatabaseService spatialDatabaseService = new SpatialDatabaseService(graphDatabaseService());
         return spatialDatabaseService;
     }
-    */
+
+
 }

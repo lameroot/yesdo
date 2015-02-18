@@ -2,7 +2,7 @@ package ru.yesdo.graph.service;
 
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
-import ru.yesdo.graph.data.UserData;
+import ru.yesdo.model.data.UserData;
 import ru.yesdo.graph.repository.MerchantGraphRepository;
 import ru.yesdo.graph.repository.UserGraphRepository;
 import ru.yesdo.model.Offer;
@@ -10,8 +10,6 @@ import ru.yesdo.model.Rating;
 import ru.yesdo.model.User;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * User: Krainov

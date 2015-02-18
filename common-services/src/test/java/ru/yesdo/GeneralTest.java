@@ -2,10 +2,14 @@ package ru.yesdo;
 
 import junit.framework.TestCase;
 import org.junit.runner.RunWith;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.test.TestGraphDatabaseFactory;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -28,9 +32,17 @@ import javax.sql.DataSource;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {
-        GeneralTest.JpaConfigTest.class
+        GeneralTest.CommonsServiceConfigTest.class,
+        GeneralTest.JpaConfigTest.class,
+        GeneralTest.Neo4jConfigurationForTest.class
 })
 public abstract class GeneralTest extends TestCase {
+
+    @Configuration
+    @ComponentScan(basePackages = "ru.yesdo.service")
+    public static class CommonsServiceConfigTest {
+
+    }
 
     @Configuration
     @EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
@@ -90,4 +102,27 @@ public abstract class GeneralTest extends TestCase {
             return adapter;
         }
     }
+
+    @Configuration
+    @EnableTransactionManagement(mode = AdviceMode.PROXY)
+    @EnableNeo4jRepositories(basePackages = "ru.yesdo.graph.repository")
+    @ComponentScan("ru.yesdo.graph.service")
+    static class Neo4jConfigurationForTest extends org.springframework.data.neo4j.config.Neo4jConfiguration
+    {
+
+        private static final String DB_PATH = "data/graph.db";
+
+        public Neo4jConfigurationForTest() {
+            setBasePackage("ru.yesdo.model");
+        }
+
+
+
+        @Bean
+        public GraphDatabaseService graphDatabaseService() {
+            return new TestGraphDatabaseFactory().newImpermanentDatabase();
+            //return new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
+        }
+    }
+
 }

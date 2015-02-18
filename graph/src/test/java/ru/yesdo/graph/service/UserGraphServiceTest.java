@@ -1,12 +1,9 @@
 package ru.yesdo.graph.service;
 
 
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.data.neo4j.support.node.Neo4jHelper;
 
-import org.springframework.transaction.annotation.Transactional;
-import ru.yesdo.graph.data.UserData;
+import ru.yesdo.model.data.UserData;
 import ru.yesdo.graph.repository.ContactGraphRepository;
 import ru.yesdo.graph.repository.UserGraphRepository;
 import ru.yesdo.model.Merchant;

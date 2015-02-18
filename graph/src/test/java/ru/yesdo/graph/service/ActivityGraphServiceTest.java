@@ -1,17 +1,13 @@
 package ru.yesdo.graph.service;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.data.neo4j.repository.GraphRepository;
 import ru.yesdo.graph.config.Neo4jConfigurationTest;
-import ru.yesdo.graph.data.ActivityData;
+import ru.yesdo.model.data.ActivityData;
 import ru.yesdo.graph.repository.ActivityGraphRepository;
 import ru.yesdo.model.Activity;
 
 import javax.annotation.Resource;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by lameroot on 24.01.15.

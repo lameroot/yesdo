@@ -1,16 +1,12 @@
 package ru.yesdo.graph.service;
 
-import org.junit.Before;
 import org.junit.Test;
-import ru.yesdo.graph.data.MerchantData;
-import ru.yesdo.graph.data.ProductData;
+import ru.yesdo.model.data.MerchantData;
 import ru.yesdo.graph.repository.ActivityGraphRepository;
 import ru.yesdo.graph.repository.MerchantGraphRepository;
 import ru.yesdo.model.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.Set;
 
 /**
  * Created by lameroot on 25.01.15.

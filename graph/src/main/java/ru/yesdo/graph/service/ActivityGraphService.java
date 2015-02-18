@@ -2,7 +2,7 @@ package ru.yesdo.graph.service;
 
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
-import ru.yesdo.graph.data.ActivityData;
+import ru.yesdo.model.data.ActivityData;
 import ru.yesdo.graph.repository.ActivityGraphRepository;
 import ru.yesdo.model.Activity;
 

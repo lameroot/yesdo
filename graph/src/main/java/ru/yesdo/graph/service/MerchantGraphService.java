@@ -2,9 +2,8 @@ package ru.yesdo.graph.service;
 
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.stereotype.Service;
-import ru.yesdo.graph.data.MerchantData;
-import ru.yesdo.graph.data.OfferData;
-import ru.yesdo.graph.data.ProductData;
+import ru.yesdo.model.data.MerchantData;
+import ru.yesdo.model.data.OfferData;
 import ru.yesdo.graph.repository.ActivityGraphRepository;
 import ru.yesdo.graph.repository.MerchantGraphRepository;
 
@@ -12,8 +11,6 @@ import ru.yesdo.graph.repository.ProductGraphRepository;
 import ru.yesdo.model.*;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by lameroot on 25.01.15.

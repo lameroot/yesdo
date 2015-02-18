@@ -1,17 +1,15 @@
 package ru.yesdo.graph.service;
 
-import org.junit.Before;
 import org.junit.Test;
-import ru.yesdo.graph.data.ContactData;
-import ru.yesdo.graph.data.OfferData;
-import ru.yesdo.graph.data.ProductData;
+import ru.yesdo.model.data.ContactData;
+import ru.yesdo.model.data.OfferData;
+import ru.yesdo.model.data.ProductData;
 import ru.yesdo.graph.repository.OfferGraphRepository;
 import ru.yesdo.graph.repository.ProductGraphRepository;
 import ru.yesdo.model.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by lameroot on 01.02.15.

@@ -1,11 +1,18 @@
 package ru.yesdo.graph.config;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.neo4j.gis.spatial.*;
+import org.neo4j.gis.spatial.encoders.SimplePointEncoder;
+import org.neo4j.gis.spatial.osm.OSMImporter;
+import org.neo4j.gis.spatial.pipes.GeoPipeFlow;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.test.TestGraphDatabaseFactory;
+import org.neo4j.unsafe.batchinsert.BatchInserter;
+import org.neo4j.unsafe.batchinsert.BatchInserterImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +39,11 @@ import ru.yesdo.model.User;
 
 import javax.annotation.Resource;
 import javax.transaction.TransactionManager;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by lameroot on 21.01.15.
@@ -53,15 +64,14 @@ public class Neo4jConfigurationTest extends AbstractConfigTest {
         protected PlatformTransactionManager platformTransactionManager;
         @Resource
         protected GraphDatabaseService graphDatabaseService;
+        @Resource
+        protected SpatialDatabaseService spatialDatabaseService;
 
 
     @Resource
     private UserGraphRepository userGraphRepository;
 
-        @BeforeTransaction
-        //@Before
-//        @Transactional
-//        @Rollback(false)
+        //@BeforeTransaction
         public void setUp() {
                 System.out.println("-----");
                 neo4jTemplate.query("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r", new HashMap<>());
@@ -76,9 +86,37 @@ public class Neo4jConfigurationTest extends AbstractConfigTest {
                 assertNotNull(activityGraphRepository);
                 assertNotNull(platformTransactionManager);
             assertNotNull(userGraphRepository);
+                assertNotNull(spatialDatabaseService);
 
 //            Result<User> users = userGraphRepository.findAll();
 //            System.out.println(users);
+        }
+
+        @Test
+        public void testSpatial() throws IOException {
+//                ShapefileImporter shapefileImporter = new ShapefileImporter(graphDatabaseService);
+//                File file = new File("/Users/lameroot/Downloads/highway.shp");
+//                System.out.println(file.exists());
+//                shapefileImporter.importFile("/Users/lameroot/Downloads/highway.shp","test");
+
+//                SpatialDatabaseService db = new SpatialDatabaseService( graphDatabaseService );
+//                EditableLayer layer = (EditableLayer) db.createLayer("test", SimplePointEncoder.class, EditableLayerImpl.class, "lon:lat");
+//                assertNotNull( layer );
+
+
+                SimplePointLayer pointLayer = spatialDatabaseService.createSimplePointLayer("test");
+                assertNotNull(pointLayer);
+                pointLayer.add(new Coordinate(11.2,22.3));
+                pointLayer.add(new Coordinate(21.2,22.3));
+                pointLayer.add(new Coordinate(31.2,22.3));
+                pointLayer.add(new Coordinate(41.2,22.3));
+
+                Coordinate myPosition = new Coordinate(22.2,22.3);
+                List<GeoPipeFlow> list = pointLayer.findClosestPointsTo(myPosition,10);
+                for (GeoPipeFlow geoPipeFlow : list) {
+                        System.out.println(geoPipeFlow.getGeometry().getCoordinate());
+                }
+
         }
 
         @Test

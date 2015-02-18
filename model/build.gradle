@@ -2,7 +2,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile ('org.springframework.data:spring-data-neo4j:3.2.1.RELEASE') {
+    compile ('org.springframework.data:spring-data-neo4j:3.2.2.RELEASE') {//change to up version
         exclude group: 'org.springframework'
         //exclude group: 'org.springframework', module: 'spring-tx'
     }

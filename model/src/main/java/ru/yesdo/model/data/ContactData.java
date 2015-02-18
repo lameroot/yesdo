@@ -1,4 +1,4 @@
-package ru.yesdo.graph.data;
+package ru.yesdo.model.data;
 
 import ru.yesdo.model.ContactParam;
 
